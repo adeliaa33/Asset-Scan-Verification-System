@@ -11,7 +11,7 @@ export default async function handler(req, res) {
   }
 
   const gasUrl = process.env.GAS_WEB_APP_URL;
-  const gasToken = process.env.GAS_SECRET_TOKEN || "astra_daihatsu_2026";
+  const gasToken = process.env.GAS_SECRET_TOKEN || "aset_scan_2026";
 
   if (!gasUrl) {
     return res.status(500).json({ status: "error", message: "GAS_WEB_APP_URL belum disetel di Environment Variables Vercel" });
