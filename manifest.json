@@ -15,11 +15,17 @@
     "utilities"
   ],
    "icons": [
-      {
-        "src": "icon-apk.png",
-        "sizes": "192x192 512x512 1254x1254",
-        "type": "image/png",
-        "purpose": "any"
+     {
+      "src": "icon-apk-1.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+      },
+    {
+    "src": "icon-apk.png",
+    "sizes": "512x512",
+    "type": "image/png",
+    "purpose": "any"
       }
     ]
   }
