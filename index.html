@@ -749,6 +749,43 @@
             
             <!-- Kolom Kiri & Tengah: Sesi Aktif & Ubah Kata Sandi -->
             <div class="lg:col-span-2 space-y-5">
+            
+                <!-- KARTU DOWNLOAD APLIKASI KE HP (WEB APK / PWA) -->
+                <div class="bg-gradient-to-br from-slate-900 via-[#0d1938] to-[#0a142f] text-white rounded-2xl border border-slate-700/80 shadow-xl p-5 sm:p-6 space-y-4 relative overflow-hidden">
+                    <div class="flex items-start space-x-3.5">
+                        <!-- Ikon Aplikasi ASV -->
+                        <div class="w-12 h-12 rounded-2xl bg-white p-1.5 flex items-center justify-center shadow-md shrink-0">
+                            <div class="w-full h-full rounded-xl bg-gradient-to-br from-daihatsu-600 to-astra-700 flex flex-col items-center justify-center text-white leading-none">
+                                <span class="font-black text-xs tracking-tight">ASV</span>
+                                <span class="text-[7px] font-bold opacity-90 mt-0.5">ASTRA</span>
+                            </div>
+                        </div>
+                        <div class="min-w-0 flex-1">
+                            <div class="flex flex-wrap items-center gap-2">
+                                <h3 class="font-black text-sm sm:text-base text-white tracking-tight">Download Aplikasi ke HP</h3>
+                                <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">Web APK</span>
+                            </div>
+                            <p class="text-[11px] text-slate-300 mt-0.5">Pasang ikon aplikasi di Home Screen HP Anda</p>
+                        </div>
+                    </div>
+
+                    <!-- Kotak Deskripsi -->
+                    <div class="bg-white/5 border border-white/10 rounded-xl p-3.5 text-xs text-slate-200 leading-relaxed">
+                        Pasang aplikasi <strong class="text-white">Asset Scan & Verification (ASV)</strong> langsung di layar utama smartphone Android / iPhone untuk akses lebih cepat, hemat kuota, dan dukungan pemindaian aset di lapangan.
+                    </div>
+
+                    <!-- Tombol Aksi -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
+                        <button onclick="triggerPwaInstall()" id="btnInstallPwaMain" class="w-full py-2.5 px-3 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs rounded-xl shadow-lg shadow-emerald-600/25 transition flex items-center justify-center gap-1.5">
+                            <i class="fa-solid fa-download"></i>
+                            <span>Download & Pasang Web APK</span>
+                        </button>
+                        <button onclick="openPwaGuideModal()" class="w-full py-2.5 px-3 bg-white/10 hover:bg-white/15 text-white border border-white/15 font-bold text-xs rounded-xl transition flex items-center justify-center gap-1.5">
+                            <i class="fa-solid fa-mobile-screen-button text-sky-400"></i>
+                            <span>Petunjuk HP</span>
+                        </button>
+                    </div>
+                </div>   
                 
                 <!-- 1. KARTU SESI PETUGAS AKTIF -->
                 <div class="bg-white rounded-2xl border border-slate-200 shadow-xs p-5 sm:p-6 space-y-4">
@@ -848,42 +885,6 @@
                     </div>
                 </div>
 
-                <!-- KARTU DOWNLOAD APLIKASI KE HP (WEB APK / PWA) -->
-                <div class="bg-gradient-to-br from-slate-900 via-[#0d1938] to-[#0a142f] text-white rounded-2xl border border-slate-700/80 shadow-xl p-5 sm:p-6 space-y-4 relative overflow-hidden">
-                    <div class="flex items-start space-x-3.5">
-                        <!-- Ikon Aplikasi ASV -->
-                        <div class="w-12 h-12 rounded-2xl bg-white p-1.5 flex items-center justify-center shadow-md shrink-0">
-                            <div class="w-full h-full rounded-xl bg-gradient-to-br from-daihatsu-600 to-astra-700 flex flex-col items-center justify-center text-white leading-none">
-                                <span class="font-black text-xs tracking-tight">ASV</span>
-                                <span class="text-[7px] font-bold opacity-90 mt-0.5">ASTRA</span>
-                            </div>
-                        </div>
-                        <div class="min-w-0 flex-1">
-                            <div class="flex flex-wrap items-center gap-2">
-                                <h3 class="font-black text-sm sm:text-base text-white tracking-tight">Download Aplikasi ke HP</h3>
-                                <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">Web APK</span>
-                            </div>
-                            <p class="text-[11px] text-slate-300 mt-0.5">Pasang ikon aplikasi di Home Screen HP Anda</p>
-                        </div>
-                    </div>
-
-                    <!-- Kotak Deskripsi -->
-                    <div class="bg-white/5 border border-white/10 rounded-xl p-3.5 text-xs text-slate-200 leading-relaxed">
-                        Pasang aplikasi <strong class="text-white">Asset Scan & Verification (ASV)</strong> langsung di layar utama smartphone Android / iPhone untuk akses lebih cepat, hemat kuota, dan dukungan pemindaian aset di lapangan.
-                    </div>
-
-                    <!-- Tombol Aksi -->
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
-                        <button onclick="triggerPwaInstall()" id="btnInstallPwaMain" class="w-full py-2.5 px-3 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs rounded-xl shadow-lg shadow-emerald-600/25 transition flex items-center justify-center gap-1.5">
-                            <i class="fa-solid fa-download"></i>
-                            <span>Download & Pasang Web APK</span>
-                        </button>
-                        <button onclick="openPwaGuideModal()" class="w-full py-2.5 px-3 bg-white/10 hover:bg-white/15 text-white border border-white/15 font-bold text-xs rounded-xl transition flex items-center justify-center gap-1.5">
-                            <i class="fa-solid fa-mobile-screen-button text-sky-400"></i>
-                            <span>Petunjuk HP</span>
-                        </button>
-                    </div>
-                </div>
             </div>
 
         </div>
