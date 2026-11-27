@@ -6,8 +6,8 @@
   "scope": "./",
   "display": "standalone",
   "orientation": "portrait",
-  "background_color": "#0f172a",
-  "theme_color": "#0f172a",
+  "background_color": "#f1f5f9",
+  "theme_color": "#ffffff",
   "lang": "id",
   "categories": [
     "business",
@@ -25,13 +25,13 @@
         "src": "icon-apk.png",
         "sizes": "any",
         "type": "image/png",
-        "purpose": "maskable"
+        "purpose": "any"
       },
       {
         "src": "icon-apk.png",
         "sizes": "192x192 512x512 1254x1254",
         "type": "image/png",
-        "purpose": "any maskable"
+        "purpose": "any"
       }
     ]
   }
