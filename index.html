@@ -1364,9 +1364,8 @@
             <!-- Header Modal -->
             <div class="bg-gradient-to-r from-slate-900 via-[#0f2354] to-[#132a63] text-white p-4 sm:p-5 flex items-center justify-between shrink-0">
                 <div class="flex items-center space-x-3 min-w-0">
-                   <div class="w-11 h-11 rounded-2xl bg-white p-1 flex items-center justify-center shadow-md shrink-0 overflow-hidden">
-                            <img src="assets/icons/icon-apk-1.png" alt="ASV Icon" class="w-full h-full object-cover rounded-xl">
-                        </div>
+                    <div class="w-11 h-11 rounded-2xl bg-white p-1 flex items-center justify-center shadow-md shrink-0 overflow-hidden">
+                        <img src="assets/icons/icon-apk-1.png" onerror="this.src='assets/icons/icon-apk.png';" alt="ASV Icon" class="w-full h-full object-cover rounded-xl">
                     </div>
                     <div class="min-w-0">
                         <div class="flex items-center gap-2 flex-wrap">
@@ -1381,10 +1380,10 @@
                 </button>
             </div>
 
-            <!-- Konten Scrollable -->
+            <!-- Body Modal (Scrollable) -->
             <div class="p-4 sm:p-5 space-y-4 overflow-y-auto flex-1 custom-scrollbar text-xs text-slate-700">
                 
-                <!-- Kotak Hijau Pasang Otomatis (1-Klik) -->
+                <!-- Kotak Pasang Otomatis 1-Klik -->
                 <div class="bg-emerald-50/80 border border-emerald-200 rounded-xl p-3.5 flex items-center justify-between gap-3">
                     <div class="space-y-0.5">
                         <p class="font-bold text-emerald-900 flex items-center gap-1.5 text-xs">
@@ -1399,7 +1398,7 @@
                     </button>
                 </div>
 
-                <!-- Panduan Android -->
+                <!-- Langkah A: Android -->
                 <div class="bg-white border border-slate-200 rounded-xl p-4 space-y-2.5 shadow-2xs">
                     <div class="flex items-center space-x-2.5">
                         <span class="w-6 h-6 rounded-lg bg-emerald-600 text-white font-black text-xs flex items-center justify-center shrink-0">A</span>
@@ -1414,7 +1413,7 @@
                     </ol>
                 </div>
 
-                <!-- Panduan iOS / iPhone -->
+                <!-- Langkah iOS -->
                 <div class="bg-white border border-slate-200 rounded-xl p-4 space-y-2.5 shadow-2xs">
                     <div class="flex items-center space-x-2.5">
                         <span class="px-1.5 h-6 rounded-lg bg-slate-900 text-white font-black text-[10px] flex items-center justify-center shrink-0">iOS</span>
@@ -1428,7 +1427,7 @@
                     </ol>
                 </div>
 
-                <!-- Keuntungan Memasang ke Layar Utama (Disesuaikan untuk ASV) -->
+                <!-- Keuntungan -->
                 <div class="bg-sky-50/80 border border-sky-200 rounded-xl p-4 space-y-2">
                     <h4 class="font-bold text-astra-800 text-xs flex items-center gap-1.5">
                         <i class="fa-regular fa-circle-check text-astra-600 text-sm"></i>
@@ -1442,6 +1441,19 @@
                 </div>
 
             </div>
+
+            <!-- Footer Modal -->
+            <div class="bg-slate-50 px-4 py-3 border-t border-slate-200 flex items-center justify-end gap-2.5 shrink-0">
+                <button onclick="closePwaGuideModal()" class="px-4 py-2.5 bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold text-xs rounded-xl transition">
+                    Tutup
+                </button>
+                <button onclick="triggerPwaInstall()" class="px-4 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-xl shadow-md transition flex items-center gap-1.5">
+                    <i class="fa-solid fa-download"></i>
+                    <span>Pasang ke HP Sekarang</span>
+                </button>
+            </div>
+        </div>
+    </div>
 
             <!-- Footer Modal -->
             <div class="bg-slate-50 px-4 py-3 border-t border-slate-200 flex items-center justify-end gap-2.5 shrink-0">
