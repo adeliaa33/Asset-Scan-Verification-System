@@ -17,18 +17,6 @@
    "icons": [
       {
         "src": "icon-apk.png",
-        "sizes": "any",
-        "type": "image/png",
-        "purpose": "any"
-      },
-      {
-        "src": "icon-apk.png",
-        "sizes": "any",
-        "type": "image/png",
-        "purpose": "any"
-      },
-      {
-        "src": "icon-apk.png",
         "sizes": "192x192 512x512 1254x1254",
         "type": "image/png",
         "purpose": "any"
