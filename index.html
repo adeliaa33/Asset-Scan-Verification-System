@@ -3946,13 +3946,38 @@
         // --- PWA INSTALLATION & SERVICE WORKER ---
         let deferredPwaPrompt = null;
 
+        function setInstallButtonReady(isReady) {
+            const btnMain = document.getElementById('btnInstallPwaMain');
+            if (!btnMain) return;
+            if (isReady) {
+                btnMain.disabled = false;
+                btnMain.className = "w-full py-2.5 px-3 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs rounded-xl shadow-lg shadow-emerald-600/25 transition flex items-center justify-center gap-1.5 cursor-pointer";
+                btnMain.innerHTML = `<i class="fa-solid fa-download"></i><span>Instal Aplikasi Sekarang</span>`;
+            }
+        }
+
+        function setInstallButtonInstalled() {
+            const btnMain = document.getElementById('btnInstallPwaMain');
+            if (!btnMain) return;
+            btnMain.disabled = true;
+            btnMain.className = "w-full py-2.5 px-3 bg-slate-700 text-emerald-300 border border-emerald-500/40 font-bold text-xs rounded-xl flex items-center justify-center gap-1.5 cursor-default";
+            btnMain.innerHTML = `<i class="fa-solid fa-circle-check"></i><span>Aplikasi Sudah Terpasang</span>`;
+        }
+
+        // Cek jika aplikasi sudah dibuka dalam mode aplikasi terinstal (standalone)
+        if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true) {
+            window.addEventListener('DOMContentLoaded', setInstallButtonInstalled);
+        }
+
         window.addEventListener('beforeinstallprompt', (e) => {
             e.preventDefault();
             deferredPwaPrompt = e;
+            setInstallButtonReady(true);
         });
 
         window.addEventListener('appinstalled', () => {
             deferredPwaPrompt = null;
+            setInstallButtonInstalled();
             closePwaGuideModal();
             showToast('Aplikasi Terpasang!', 'ASV System berhasil dipasang ke Home Screen HP Anda.', 'success');
         });
@@ -3969,16 +3994,22 @@
 
         async function triggerPwaInstall() {
             if (deferredPwaPrompt) {
+                // Langsung munculkan dialog instalasi resmi Android tanpa membuka petunjuk
                 deferredPwaPrompt.prompt();
                 const { outcome } = await deferredPwaPrompt.userChoice;
                 if (outcome === 'accepted') {
                     deferredPwaPrompt = null;
+                    setInstallButtonInstalled();
                     closePwaGuideModal();
                 }
             } else {
-                // Jika browser iOS Safari atau prompt sudah pernah muncul / berjalan di preview
-                openPwaGuideModal();
-                showToast('Petunjuk Instalasi', 'Ikuti panduan pemasangan manual Android / iOS di layar ini.', 'info');
+                // Cek apakah sudah terinstal atau browser belum siap
+                const isStandalone = window.matchMedia('(display-mode: standalone)').matches;
+                if (isStandalone) {
+                    showToast('Sudah Terpasang', 'Aplikasi ASV System sudah terinstal di perangkat Anda.', 'success');
+                } else {
+                    showToast('Info Instalasi', 'Jika aplikasi sudah terinstal cek di Layar Utama, atau ketuk titik tiga Chrome (⋮) > Instal Aplikasi.', 'info');
+                }
             }
         }
 
