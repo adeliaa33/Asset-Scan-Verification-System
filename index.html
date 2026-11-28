@@ -104,6 +104,9 @@
 </head>
 <body class="bg-slate-100 text-slate-800 antialiased min-h-screen flex flex-col relative overflow-x-hidden pb-20 lg:pb-0">
 
+    <!-- Input Tersembunyi untuk Sinkronisasi Barcode dari Scanner / Perangkat Eksternal -->
+    <input type="hidden" id="mainBarcodeInput" value="">
+
     <!-- Toast Notification -->
     <div id="toastBox" class="fixed top-3 left-3 right-3 sm:top-5 sm:right-5 sm:left-auto z-[999] transform -translate-y-32 transition-transform duration-300 ease-out max-w-sm w-full mx-auto sm:mx-0">
         <div id="toastContent" class="bg-slate-900 text-white p-3.5 sm:p-4 rounded-xl shadow-2xl flex items-start space-x-3 border border-slate-700">
@@ -112,7 +115,7 @@
                 <p id="toastTitle" class="font-bold text-xs sm:text-sm">Notifikasi</p>
                 <p id="toastMessage" class="text-xs text-slate-300 mt-0.5 leading-relaxed truncate sm:whitespace-normal">Pesan tersimpan.</p>
             </div>
-            <button onclick="hideToast()" class="text-slate-400 hover:text-white p-1">
+            <button onclick="hideToast()" class="text-slate-400 hover:text-white p-1" aria-label="Tutup Notifikasi">
                 <i class="fa-solid fa-xmark text-sm"></i>
             </button>
         </div>
@@ -170,7 +173,7 @@
                     </div>
                 </div>
             </div>
-            <button onclick="toggleSidebar()" class="p-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg">
+            <button onclick="toggleSidebar()" class="p-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg" aria-label="Tutup Menu">
                 <i class="fa-solid fa-xmark text-lg"></i>
             </button>
         </div>
@@ -529,7 +532,7 @@
         </section>
     </main>
     
-   <!-- VIEW 3: RIWAYAT SCAN ASET -->
+    <!-- VIEW 3: RIWAYAT SCAN ASET -->
     <main id="auditHistoryView" class="flex-grow max-w-7xl w-full mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-6 space-y-4 sm:space-y-6 hidden">
         
         <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
@@ -752,11 +755,11 @@
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
                         <button type="button" onclick="triggerPwaInstall()" id="btnInstallPwaMain" class="w-full py-2.5 px-3 bg-emerald-600 hover:bg-emerald-500 active:scale-[0.98] text-white font-bold text-xs rounded-xl shadow-lg shadow-emerald-600/25 transition flex items-center justify-center gap-1.5 cursor-pointer">
                             <i class="fa-solid fa-download"></i>
-                            <span id="btnInstallPwaMainText">Download & Pasang Web APK</span>
+                            <span id="btnInstallPwaMainText">Pasang ke Layar Utama</span>
                         </button>
-                        <button type="button" onclick="openPwaGuideModal()" class="w-full py-2.5 px-3 bg-white/10 hover:bg-white/15 text-white border border-white/15 font-bold text-xs rounded-xl transition flex items-center justify-center gap-1.5 cursor-pointer">
+                        <button type="button" onclick="openSmartPwaGuide()" class="w-full py-2.5 px-3 bg-white/10 hover:bg-white/15 text-white border border-white/15 font-bold text-xs rounded-xl transition flex items-center justify-center gap-1.5 cursor-pointer">
                             <i class="fa-solid fa-mobile-screen-button text-sky-400"></i>
-                            <span>Petunjuk HP</span>
+                            <span>Petunjuk HP (Android / iOS)</span>
                         </button>
                     </div>
                     <div id="pwaInlineHelper" class="hidden bg-amber-500/15 border border-amber-400/30 rounded-xl p-3 text-[11px] text-amber-200 leading-relaxed"></div>
@@ -810,7 +813,7 @@
                                 <div class="relative">
                                     <i class="fa-solid fa-lock absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
                                     <input type="password" id="oldPasswordInput" required placeholder="••••••••" class="w-full pl-9 pr-10 py-2.5 bg-slate-50 border border-slate-300 rounded-xl font-medium text-slate-900 focus:ring-2 focus:ring-daihatsu-500 focus:bg-white focus:outline-none transition">
-                                    <button type="button" onclick="toggleCustomPasswordVisibility('oldPasswordInput', 'oldPassIcon')" class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 p-1">
+                                    <button type="button" onclick="toggleCustomPasswordVisibility('oldPasswordInput', 'oldPassIcon')" class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 p-1" aria-label="Tampilkan Kata Sandi Lama">
                                         <i id="oldPassIcon" class="fa-solid fa-eye text-xs"></i>
                                     </button>
                                 </div>
@@ -820,7 +823,7 @@
                                 <div class="relative">
                                     <i class="fa-solid fa-shield-halved absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
                                     <input type="password" id="newPasswordInput" required placeholder="••••••••" class="w-full pl-9 pr-10 py-2.5 bg-slate-50 border border-slate-300 rounded-xl font-medium text-slate-900 focus:ring-2 focus:ring-daihatsu-500 focus:bg-white focus:outline-none transition">
-                                    <button type="button" onclick="toggleCustomPasswordVisibility('newPasswordInput', 'newPassIcon')" class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 p-1">
+                                    <button type="button" onclick="toggleCustomPasswordVisibility('newPasswordInput', 'newPassIcon')" class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 p-1" aria-label="Tampilkan Kata Sandi Baru">
                                         <i id="newPassIcon" class="fa-solid fa-eye text-xs"></i>
                                     </button>
                                 </div>
@@ -877,7 +880,7 @@
         </button>
 
         <div class="relative -top-6">
-            <button onclick="openScanMethodModal()" class="w-14 h-14 rounded-full bg-gradient-to-tr from-daihatsu-700 via-daihatsu-600 to-astra-700 text-white flex items-center justify-center shadow-lg shadow-daihatsu-600/40 border-4 border-white active:scale-95 transition-all">
+            <button onclick="openScanMethodModal()" class="w-14 h-14 rounded-full bg-gradient-to-tr from-daihatsu-700 via-daihatsu-600 to-astra-700 text-white flex items-center justify-center shadow-lg shadow-daihatsu-600/40 border-4 border-white active:scale-95 transition-all" aria-label="Buka Scanner">
                 <i class="fa-solid fa-camera text-xl"></i>
             </button>
         </div>
@@ -906,7 +909,7 @@
                         <p class="text-[10px] text-slate-500">Masukkan ID Asset atau nomor inventaris</p>
                     </div>
                 </div>
-                <button onclick="closeManualInputModal()" class="text-slate-400 hover:text-slate-600 p-1 rounded-lg">
+                <button onclick="closeManualInputModal()" class="text-slate-400 hover:text-slate-600 p-1 rounded-lg" aria-label="Tutup">
                     <i class="fa-solid fa-xmark text-base"></i>
                 </button>
             </div>
@@ -958,7 +961,7 @@
                     <div class="relative">
                         <i class="fa-solid fa-lock absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
                         <input type="password" id="loginPassword" required placeholder="••••••••" class="w-full pl-9 pr-10 py-2.5 bg-slate-50 border border-slate-300 rounded-xl font-medium text-slate-900 focus:ring-2 focus:ring-daihatsu-500 focus:bg-white focus:outline-none transition">
-                        <button type="button" onclick="togglePasswordVisibility()" class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600">
+                        <button type="button" onclick="togglePasswordVisibility()" class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600" aria-label="Tampilkan Password">
                             <i id="togglePasswordIcon" class="fa-solid fa-eye"></i>
                         </button>
                     </div>
@@ -1000,7 +1003,7 @@
                         <p class="text-[10px] text-slate-400 truncate">Lengkapi status dan foto jika ada kerusakan</p>
                     </div>
                 </div>
-                <button onclick="closeOpnameModal()" class="text-slate-400 hover:text-white p-1.5 rounded-lg shrink-0">
+                <button onclick="closeOpnameModal()" class="text-slate-400 hover:text-white p-1.5 rounded-lg shrink-0" aria-label="Tutup">
                     <i class="fa-solid fa-xmark text-base"></i>
                 </button>
             </div>
@@ -1092,7 +1095,7 @@
                 <button onclick="closeOpnameModal()" class="px-4 py-2.5 text-xs font-bold text-slate-600 hover:bg-slate-200 rounded-xl transition">
                     Batal
                 </button>
-                <button onclick="saveOpnameVerification()" class="px-5 py-2.5 text-xs font-bold bg-daihatsu-600 hover:bg-daihatsu-700 text-white rounded-xl transition shadow-md flex items-center gap-1.5">
+                <button id="btnSaveOpname" onclick="saveOpnameVerification()" class="px-5 py-2.5 text-xs font-bold bg-daihatsu-600 hover:bg-daihatsu-700 text-white rounded-xl transition shadow-md flex items-center gap-1.5">
                     <i class="fa-solid fa-check"></i>
                     <span>Simpan Log Opname</span>
                 </button>
@@ -1107,7 +1110,7 @@
                 <span class="text-xs font-bold flex items-center gap-2">
                     <i class="fa-solid fa-image text-astra-400"></i> Lampiran Foto Aset Temuan
                 </span>
-                <button onclick="closePhotoDetail()" class="text-slate-400 hover:text-white p-1">
+                <button onclick="closePhotoDetail()" class="text-slate-400 hover:text-white p-1" aria-label="Tutup">
                     <i class="fa-solid fa-xmark text-base"></i>
                 </button>
             </div>
@@ -1133,7 +1136,7 @@
                     <i class="fa-solid fa-plus-circle text-daihatsu-500 text-base"></i>
                     <h3 class="font-bold text-xs sm:text-sm">Tambah Master Aset Baru</h3>
                 </div>
-                <button onclick="closeAddAssetModal()" class="text-slate-400 hover:text-white p-1">
+                <button onclick="closeAddAssetModal()" class="text-slate-400 hover:text-white p-1" aria-label="Tutup">
                     <i class="fa-solid fa-xmark text-lg"></i>
                 </button>
             </div>
@@ -1197,7 +1200,7 @@
                     <i class="fa-solid fa-camera text-astra-400"></i>
                     <h3 class="font-bold text-xs sm:text-sm">Scan Barcode Kamera</h3>
                 </div>
-                <button onclick="closeCameraModal()" class="text-slate-400 hover:text-white p-1">
+                <button onclick="closeCameraModal()" class="text-slate-400 hover:text-white p-1" aria-label="Tutup">
                     <i class="fa-solid fa-xmark text-lg"></i>
                 </button>
             </div>
@@ -1244,7 +1247,7 @@
                     Tutup
                 </button>
 
-                <button id="btnRescanCamera" onclick="resetActiveScanner()" class="hidden w-1/3 px-3 py-2.5 bg-amber-500 hover:bg-amber-600 text-white text-xs font-bold rounded-xl shadow-xs transition items-center justify-center gap-1">
+                <button id="btnRescanCamera" onclick="resetActiveScanner()" class="hidden w-1/3 px-3 py-2.5 bg-amber-500 hover:bg-amber-600 text-white text-xs font-bold rounded-xl shadow-xs transition flex items-center justify-center gap-1">
                     <i class="fa-solid fa-rotate-right"></i> Ulang
                 </button>
 
@@ -1256,6 +1259,9 @@
         </div>
     </div>
 
+    <!-- Container khusus untuk scan foto statis agar tidak bentrok dengan live cameraReader -->
+    <div id="staticFileReader" class="hidden"></div>
+
     <!-- MODAL PILIHAN METODE SCAN -->
     <div id="scanMethodModal" class="fixed inset-0 z-50 bg-slate-900/70 backdrop-blur-xs hidden flex items-end sm:items-center justify-center p-3 sm:p-4" onclick="closeScanMethodModal()">
         <div class="bg-white rounded-2xl max-w-sm w-full p-4 shadow-2xl space-y-3 transform transition-all" onclick="event.stopPropagation()">
@@ -1266,7 +1272,7 @@
                     </div>
                     <h3 class="font-bold text-slate-800 text-xs sm:text-sm">Pilih Metode Pemindaian</h3>
                 </div>
-                <button onclick="closeScanMethodModal()" class="text-slate-400 hover:text-slate-600 p-1">
+                <button onclick="closeScanMethodModal()" class="text-slate-400 hover:text-slate-600 p-1" aria-label="Tutup">
                     <i class="fa-solid fa-xmark text-lg"></i>
                 </button>
             </div>
@@ -1290,7 +1296,7 @@
                         <p class="font-bold text-slate-800 text-xs group-hover:text-astra-700">Ambil Foto Barcode (Kamera HP)</p>
                         <p class="text-[10px] text-slate-500">Foto stiker barcode secara langsung menggunakan kamera HP.</p>
                     </div>
-                    <input type="file" accept="image/*" capture="environment" onchange="handleNativeCameraScanWithMethod(event, 'Scan')" class="hidden">
+                    <input type="file" id="nativeBarcodePhotoInput" accept="image/*" capture="environment" onchange="handleNativeCameraScanWithMethod(event, 'Scan')" class="hidden">
                 </label>
                 
                 <button onclick="openManualInputPrompt()" class="w-full flex items-center p-3 rounded-xl bg-slate-50 hover:bg-emerald-50 border border-slate-200 hover:border-emerald-300 transition text-left group">
@@ -1310,111 +1316,111 @@
         </div>
     </div>
 
-    <!-- MODAL PETUNJUK INSTALASI PWA (ANDROID & IOS) -->
-    <div id="pwaGuideModal" class="fixed inset-0 z-[1000] bg-slate-900/80 backdrop-blur-xs hidden flex items-center justify-center p-3 sm:p-4" onclick="closePwaGuideModal()">
-        <div class="bg-white rounded-2xl max-w-md w-full shadow-2xl overflow-hidden border border-slate-200 max-h-[92vh] flex flex-col" onclick="event.stopPropagation()">
-            
-            <!-- Header Modal -->
-            <div class="bg-gradient-to-r from-slate-900 via-[#0f2354] to-[#132a63] text-white p-4 sm:p-5 flex items-center justify-between shrink-0">
+    <!-- MODAL PANDUAN INSTALASI PWA KHUSUS ANDROID CHROME -->
+    <div id="androidPwaModal" class="fixed inset-0 z-[1000] bg-slate-900/80 backdrop-blur-xs hidden flex items-end sm:items-center justify-center p-0 sm:p-4" onclick="closeAndroidPwaModal()">
+        <div class="bg-white rounded-t-3xl sm:rounded-2xl max-w-md w-full shadow-2xl overflow-hidden border border-slate-200 max-h-[90vh] flex flex-col" onclick="event.stopPropagation()">
+            <div class="bg-gradient-to-r from-slate-900 via-astra-900 to-slate-950 text-white p-4 sm:p-5 flex items-center justify-between shrink-0">
                 <div class="flex items-center space-x-3 min-w-0">
                     <div class="w-11 h-11 rounded-2xl bg-white p-1 flex items-center justify-center shadow-md shrink-0 overflow-hidden">
                         <img src="/icon-apk-asv.png" onerror="this.onerror=null;this.src='https://placehold.co/88x88/D71921/FFFFFF?text=ASV';" alt="ASV Icon" class="w-full h-full object-cover rounded-xl">
                     </div>
                     <div class="min-w-0">
-                        <div class="flex items-center gap-2 flex-wrap">
-                            <h3 class="font-black text-sm sm:text-base text-white leading-tight">Download Web APK ke HP</h3>
-                            <span class="text-[9px] font-bold px-2 py-0.5 rounded-full bg-emerald-500 text-white">Resmi PWA</span>
+                        <div class="flex items-center gap-2">
+                            <h3 class="font-black text-sm sm:text-base text-white leading-tight">Pasang di HP Android</h3>
+                            <span class="text-[9px] font-bold px-2 py-0.5 rounded-full bg-emerald-500 text-white">Chrome</span>
                         </div>
-                        <p class="text-[11px] text-slate-300 mt-0.5 truncate">Tampilkan icon di Layar Utama HP tanpa install dari Play Store</p>
+                        <p class="text-[11px] text-slate-300 mt-0.5 truncate">Panduan Cepat Layar Utama (WebAPK)</p>
                     </div>
                 </div>
-                <button type="button" onclick="closePwaGuideModal()" class="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-slate-300 hover:text-white flex items-center justify-center transition shrink-0 ml-2">
+                <button type="button" onclick="closeAndroidPwaModal()" class="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-slate-300 hover:text-white flex items-center justify-center transition shrink-0 ml-2" aria-label="Tutup">
                     <i class="fa-solid fa-xmark text-sm"></i>
                 </button>
             </div>
 
-            <!-- Body Modal (Scrollable) -->
-            <div class="p-4 sm:p-5 space-y-4 overflow-y-auto flex-1 custom-scrollbar text-xs text-slate-700">
-                
-                <!-- Kotak Pasang Otomatis 1-Klik -->
-                <div class="bg-emerald-50/80 border border-emerald-200 rounded-xl p-3.5 flex items-center justify-between gap-3">
-                    <div class="space-y-0.5">
-                        <p class="font-bold text-emerald-900 flex items-center gap-1.5 text-xs">
-                            <i class="fa-solid fa-wand-magic-sparkles text-emerald-600"></i>
-                            <span id="pwaPromptStatusTitle">Pasang Otomatis (1-Klik)</span>
-                        </p>
-                        <p id="pwaPromptStatusDesc" class="text-[11px] text-emerald-700 leading-snug">Browser modern Android / Chrome langsung memunculkan pop-up instalasi</p>
-                    </div>
-                    <button type="button" onclick="triggerPwaInstall()" id="btnInstallPwaModalTop" class="px-3.5 py-2 bg-emerald-600 hover:bg-emerald-700 active:scale-95 text-white font-bold text-xs rounded-xl shadow-xs transition flex items-center gap-1.5 shrink-0 cursor-pointer">
-                        <i class="fa-solid fa-download"></i>
-                        <span>Pasang</span>
-                    </button>
+            <div class="p-4 sm:p-5 space-y-3 overflow-y-auto flex-1 custom-scrollbar text-xs text-slate-700">
+                <div class="flex items-start space-x-3 p-3 rounded-xl bg-slate-50 border border-slate-200/80">
+                    <span class="w-6 h-6 rounded-full bg-astra-100 text-astra-700 font-black text-[11px] flex items-center justify-center shrink-0">1</span>
+                    <p class="font-semibold text-slate-800 leading-relaxed">Ketuk ikon <span class="text-astra-600 font-extrabold">titik tiga (⋮)</span> di sudut kanan atas layar browser Chrome Anda.</p>
                 </div>
 
-                <!-- Kotak Panduan Dinamis di Dalam Modal -->
-                <div id="pwaModalAlertBox" class="hidden bg-amber-50 border border-amber-300 rounded-xl p-3.5 text-xs text-amber-900 space-y-1.5 shadow-2xs">
-                    <p class="font-bold flex items-center gap-1.5 text-amber-800">
-                        <i class="fa-solid fa-circle-info text-amber-600"></i>
-                        <span id="pwaModalAlertTitle">Cara Instal Langsung</span>
-                    </p>
-                    <p id="pwaModalAlertDesc" class="text-[11px] leading-relaxed text-amber-800"></p>
+                <div class="flex items-start space-x-3 p-3 rounded-xl bg-slate-50 border border-slate-200/80">
+                    <span class="w-6 h-6 rounded-full bg-astra-100 text-astra-700 font-black text-[11px] flex items-center justify-center shrink-0">2</span>
+                    <p class="font-semibold text-slate-800 leading-relaxed">Pilih menu <span class="px-1.5 py-0.5 bg-white border border-slate-300 rounded font-extrabold text-slate-900">"Instal aplikasi"</span> atau <span class="font-extrabold text-slate-900">"Tambahkan ke Layar Utama"</span>.</p>
                 </div>
 
-                <!-- Langkah A: Android -->
-                <div class="bg-white border border-slate-200 rounded-xl p-4 space-y-2.5 shadow-2xs">
-                    <div class="flex items-center space-x-2.5">
-                        <span class="w-6 h-6 rounded-lg bg-emerald-600 text-white font-black text-xs flex items-center justify-center shrink-0">A</span>
-                        <h4 class="font-bold text-slate-900 text-xs sm:text-sm">Cara Pasang WebAPK di HP Android (Tanpa Logo Chrome)</h4>
-                    </div>
-                    <ol class="list-decimal list-outside ml-4 space-y-1.5 text-[11px] sm:text-xs text-slate-600 leading-relaxed">
-                        <li><strong class="text-slate-800">Hapus icon lama:</strong> Jika sebelumnya sudah ada icon dengan badge Chrome kecil di layar utama, hapus/uninstall terlebih dahulu.</li>
-                        <li>Klik tombol hijau <strong class="text-slate-800">"Pasang"</strong> di atas atau tombol pada kartu Pengaturan.</li>
-                        <li>Jika menggunakan menu browser titik tiga (<strong class="text-slate-800">⋮</strong>) di Chrome, pastikan memilih opsi <span class="px-1.5 py-0.5 bg-slate-100 border border-slate-300 rounded font-bold text-slate-800 text-[10px]">"Instal Aplikasi"</span> (bukan "Tambahkan pintasan").</li>
-                        <li>Konfirmasi <strong class="text-slate-800">"Instal"</strong> pada pop-up resmi Google Play Services.</li>
-                        <li>Aplikasi <strong class="text-slate-800">Asset Scan & Verification (ASV)</strong> akan otomatis terpasang dengan icon resmi Astra Daihatsu beresolusi tinggi <strong class="text-slate-800">tanpa ada logo Chrome</strong>.</li>
-                    </ol>
+                <div class="flex items-start space-x-3 p-3 rounded-xl bg-slate-50 border border-slate-200/80">
+                    <span class="w-6 h-6 rounded-full bg-astra-100 text-astra-700 font-black text-[11px] flex items-center justify-center shrink-0">3</span>
+                    <p class="font-semibold text-slate-800 leading-relaxed">Ketuk tombol <span class="text-emerald-600 font-extrabold">"Instal"</span> pada pop-up konfirmasi sistem. Ikon <strong class="text-slate-900">ASV System</strong> akan muncul di layar utama tanpa badge browser.</p>
                 </div>
 
-                <!-- Langkah iOS -->
-                <div class="bg-white border border-slate-200 rounded-xl p-4 space-y-2.5 shadow-2xs">
-                    <div class="flex items-center space-x-2.5">
-                        <span class="px-1.5 h-6 rounded-lg bg-slate-900 text-white font-black text-[10px] flex items-center justify-center shrink-0">iOS</span>
-                        <h4 class="font-bold text-slate-900 text-xs sm:text-sm">Cara di iPhone / iPad (Safari)</h4>
-                    </div>
-                    <ol class="list-decimal list-outside ml-4 space-y-1.5 text-[11px] sm:text-xs text-slate-600 leading-relaxed">
-                        <li>Buka halaman web ini di browser bawaan <strong class="text-slate-800">Safari</strong> (bukan browser di dalam WA/IG).</li>
-                        <li>Tap ikon <strong class="text-slate-800">Share / Bagikan</strong> <i class="fa-solid fa-arrow-up-from-bracket text-sky-600"></i> (kotak dengan panah ke atas) di bar navigasi bawah Safari.</li>
-                        <li>Scroll ke bawah pada menu yang muncul, lalu pilih <span class="px-1.5 py-0.5 bg-slate-100 border border-slate-300 rounded font-bold text-slate-800 text-[10px]">"Tambah ke Layar Utama"</span> (Add to Home Screen <i class="fa-regular fa-square-plus"></i>).</li>
-                        <li>Tap tombol <strong class="text-slate-800">"Tambah"</strong> di pojok kanan atas layar. Selesai! Icon aplikasi ASV akan muncul di Home Screen iPhone Anda.</li>
-                    </ol>
+                <div class="bg-emerald-50 border border-emerald-200 rounded-xl p-3 text-[11px] text-emerald-800 flex items-start gap-2">
+                    <i class="fa-solid fa-circle-check text-emerald-600 mt-0.5"></i>
+                    <span>Jika sebelumnya sudah ada ikon lama di layar utama, hapus terlebih dahulu agar ikon resolusi tinggi terbaru terpasang sempurna.</span>
                 </div>
-
-                <!-- Keuntungan -->
-                <div class="bg-sky-50/80 border border-sky-200 rounded-xl p-4 space-y-2">
-                    <h4 class="font-bold text-astra-800 text-xs flex items-center gap-1.5">
-                        <i class="fa-regular fa-circle-check text-astra-600 text-sm"></i>
-                        <span>Keuntungan Memasang ke Layar Utama:</span>
-                    </h4>
-                    <ul class="list-disc list-outside ml-4 space-y-1 text-[11px] sm:text-xs text-astra-900/90 leading-relaxed">
-                        <li>Membuka sistem <strong>Stock Opname ASV</strong> 1-tap langsung tanpa perlu repot mengetik link web lagi.</li>
-                        <li>Layar penuh (<em>full-screen</em>) tanpa <em>address bar</em> browser sehingga area pemindaian kamera lebih luas.</li>
-                        <li>Akses kamera scanner barcode & pengambilan foto bukti temuan kerusakan aset berjalan lebih cepat, ringan, dan responsif di lapangan.</li>
-                    </ul>
-                </div>
-
             </div>
 
-            <!-- Footer Modal -->
-            <div class="bg-slate-50 px-4 py-3 border-t border-slate-200 flex items-center justify-end gap-2.5 shrink-0">
-                <button type="button" onclick="closePwaGuideModal()" class="px-4 py-2.5 bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold text-xs rounded-xl transition cursor-pointer">
-                    Tutup
+            <div class="bg-slate-50 px-4 py-3 border-t border-slate-200 flex items-center justify-end gap-2 shrink-0">
+                <button type="button" onclick="openIosPwaModal(true)" class="px-3 py-2.5 text-[11px] font-bold text-slate-500 hover:text-slate-800 transition cursor-pointer mr-auto">
+                    Pengguna iPhone?
                 </button>
-                <button type="button" onclick="triggerPwaInstall()" id="btnInstallPwaModalBottom" class="px-4 py-2.5 bg-emerald-600 hover:bg-emerald-700 active:scale-95 text-white font-bold text-xs rounded-xl shadow-md transition flex items-center gap-1.5 cursor-pointer">
-                    <i class="fa-solid fa-download"></i>
-                    <span>Pasang ke HP Sekarang</span>
+                <button type="button" onclick="closeAndroidPwaModal()" class="px-5 py-2.5 bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs rounded-xl transition cursor-pointer">
+                    Saya Mengerti
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL PANDUAN INSTALASI PWA KHUSUS IPHONE / IPAD (IOS SAFARI) -->
+    <div id="iosPwaModal" class="fixed inset-0 z-[1000] bg-slate-900/80 backdrop-blur-xs hidden flex items-end sm:items-center justify-center p-0 sm:p-4" onclick="closeIosPwaModal()">
+        <div class="bg-white rounded-t-3xl sm:rounded-2xl max-w-md w-full shadow-2xl overflow-hidden border border-slate-200 max-h-[90vh] flex flex-col" onclick="event.stopPropagation()">
+            <div class="bg-gradient-to-r from-slate-900 via-slate-800 to-daihatsu-900 text-white p-4 sm:p-5 flex items-center justify-between shrink-0">
+                <div class="flex items-center space-x-3 min-w-0">
+                    <div class="w-11 h-11 rounded-2xl bg-white p-1 flex items-center justify-center shadow-md shrink-0 overflow-hidden">
+                        <img src="/icon-apk-asv.png" onerror="this.onerror=null;this.src='https://placehold.co/88x88/D71921/FFFFFF?text=ASV';" alt="ASV Icon" class="w-full h-full object-cover rounded-xl">
+                    </div>
+                    <div class="min-w-0">
+                        <div class="flex items-center gap-2">
+                            <h3 class="font-black text-sm sm:text-base text-white leading-tight">Pasang di iPhone / iPad</h3>
+                            <span class="text-[9px] font-bold px-2 py-0.5 rounded-full bg-sky-500 text-white">Safari iOS</span>
+                        </div>
+                        <p class="text-[11px] text-slate-300 mt-0.5 truncate">Panduan 3 Langkah Mudah Layar Utama</p>
+                    </div>
+                </div>
+                <button type="button" onclick="closeIosPwaModal()" class="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-slate-300 hover:text-white flex items-center justify-center transition shrink-0 ml-2" aria-label="Tutup">
+                    <i class="fa-solid fa-xmark text-sm"></i>
                 </button>
             </div>
 
+            <div class="p-4 sm:p-5 space-y-3 overflow-y-auto flex-1 custom-scrollbar text-xs text-slate-700">
+                <div class="flex items-start space-x-3 p-3 rounded-xl bg-slate-50 border border-slate-200/80">
+                    <span class="w-6 h-6 rounded-full bg-sky-100 text-sky-700 font-black text-[11px] flex items-center justify-center shrink-0">1</span>
+                    <p class="font-semibold text-slate-800 leading-relaxed">Ketuk tombol <span class="text-sky-600 font-extrabold">Bagikan (Share) <i class="fa-solid fa-arrow-up-from-bracket"></i></span> di bilah menu bawah browser Safari.</p>
+                </div>
+
+                <div class="flex items-start space-x-3 p-3 rounded-xl bg-slate-50 border border-slate-200/80">
+                    <span class="w-6 h-6 rounded-full bg-sky-100 text-sky-700 font-black text-[11px] flex items-center justify-center shrink-0">2</span>
+                    <p class="font-semibold text-slate-800 leading-relaxed">Gulir ke bawah dan pilih menu <span class="px-1.5 py-0.5 bg-white border border-slate-300 rounded font-extrabold text-slate-900">"Tambah ke Layar Utama"</span> <i class="fa-regular fa-square-plus"></i>.</p>
+                </div>
+
+                <div class="flex items-start space-x-3 p-3 rounded-xl bg-slate-50 border border-slate-200/80">
+                    <span class="w-6 h-6 rounded-full bg-sky-100 text-sky-700 font-black text-[11px] flex items-center justify-center shrink-0">3</span>
+                    <p class="font-semibold text-slate-800 leading-relaxed">Ketuk tombol <span class="text-sky-600 font-extrabold">"Tambah"</span> di sudut kanan atas layar. Ikon <strong class="text-slate-900">ASV System</strong> siap digunakan!</p>
+                </div>
+
+                <div class="bg-amber-50 border border-amber-200 rounded-xl p-3 text-[11px] text-amber-800 flex items-start gap-2">
+                    <i class="fa-solid fa-lightbulb text-amber-500 mt-0.5"></i>
+                    <span>Pastikan Anda membuka link aplikasi ini menggunakan browser bawaan <strong>Safari</strong> (bukan browser di dalam WhatsApp/Instagram).</span>
+                </div>
+            </div>
+
+            <div class="bg-slate-50 px-4 py-3 border-t border-slate-200 flex items-center justify-end gap-2 shrink-0">
+                <button type="button" onclick="openAndroidPwaModal(true)" class="px-3 py-2.5 text-[11px] font-bold text-slate-500 hover:text-slate-800 transition cursor-pointer mr-auto">
+                    Pengguna Android?
+                </button>
+                <button type="button" onclick="closeIosPwaModal()" class="px-5 py-2.5 bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs rounded-xl transition cursor-pointer">
+                    Saya Mengerti
+                </button>
+            </div>
         </div>
     </div>
     
@@ -1444,6 +1450,16 @@
 
         const itemsPerPage = 15;
         const PROXY_API_URL = "/api/proxy";
+
+        function escapeHtml(str) {
+            if (str === null || str === undefined) return '';
+            return String(str)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
+        }
 
         function isPreviewOrOfflineEnv() {
             return window.location.protocol === 'blob:' || window.location.protocol === 'file:' || !window.location.origin || window.location.origin === 'null';
@@ -1565,11 +1581,12 @@
             closeScanMethodModal();
             showToast('Memindai Foto', 'Mendeteksi barcode dari foto kamera HP...', 'info');
         
-            const html5QrCode = new Html5Qrcode("cameraReader");
+            const html5QrCode = new Html5Qrcode("staticFileReader");
             
             html5QrCode.scanFile(file, true)
                 .then(decodedText => {
-                    html5QrCode.clear();
+                    try { html5QrCode.clear(); } catch (e) {}
+                    event.target.value = '';
                     let rawText = decodedText.trim();
                     if (rawText.length < 8) {
                         showToast('Tidak Valid', 'Barcode terlalu pendek atau tidak terbaca.', 'warning');
@@ -1619,7 +1636,8 @@
                     openOpnameModal(foundAsset, methodType);
                 })
                 .catch(err => {
-                    html5QrCode.clear();
+                    try { html5QrCode.clear(); } catch (e) {}
+                    event.target.value = '';
                     playBeepSound('error');
                     showToast('Barcode Tidak Terbaca', 'Pastikan foto stiker barcode jelas dan fokus.', 'warning');
                 });
@@ -1783,52 +1801,56 @@
                     if (activeDashboardFilterType === 'PENDING') {
                         tr.innerHTML = `
                             <td class="py-2.5 px-3 text-center font-mono text-slate-400 font-bold">${index + 1}</td>
-                            <td class="py-2.5 px-3 font-mono font-bold text-slate-900">${item.id}</td>
-                            <td class="py-2.5 px-3 font-mono text-slate-600">${item.subNumber || '0'}</td>
-                            <td class="py-2.5 px-3 font-semibold text-slate-700">${item.cabang}</td>
-                            <td class="py-2.5 px-3 font-semibold text-slate-800">${item.deskripsi}</td>
-                            <td class="py-2.5 px-3 font-mono text-slate-500 text-[11px]">${item.capitalizedOn || '-'}</td>
-                            <td class="py-2.5 px-3"><span class="bg-slate-100 text-slate-700 px-2 py-0.5 rounded font-mono text-[11px]">${item.lokasi}</span></td>
+                            <td class="py-2.5 px-3 font-mono font-bold text-slate-900">${escapeHtml(item.id)}</td>
+                            <td class="py-2.5 px-3 font-mono text-slate-600">${escapeHtml(item.subNumber || '0')}</td>
+                            <td class="py-2.5 px-3 font-semibold text-slate-700">${escapeHtml(item.cabang)}</td>
+                            <td class="py-2.5 px-3 font-semibold text-slate-800">${escapeHtml(item.deskripsi)}</td>
+                            <td class="py-2.5 px-3 font-mono text-slate-500 text-[11px]">${escapeHtml(item.capitalizedOn || '-')}</td>
+                            <td class="py-2.5 px-3"><span class="bg-slate-100 text-slate-700 px-2 py-0.5 rounded font-mono text-[11px]">${escapeHtml(item.lokasi)}</span></td>
                             <td class="py-2.5 px-3 text-center">
-                                <button onclick='openOpnameModal({"id": "${item.id}", "subNumber": "${item.subNumber || '0'}", "cabang": "${item.cabang}", "deskripsi": "${item.deskripsi.replace(/'/g, "\\'")}", "lokasi": "${item.lokasi}"}, "Manual")' class="bg-daihatsu-50 hover:bg-daihatsu-100 text-daihatsu-700 border border-daihatsu-200 px-2.5 py-1 rounded-lg text-xs font-bold transition inline-flex items-center gap-1 shadow-2xs">
+                                <button type="button" class="btn-quick-opname bg-daihatsu-50 hover:bg-daihatsu-100 text-daihatsu-700 border border-daihatsu-200 px-2.5 py-1 rounded-lg text-xs font-bold transition inline-flex items-center gap-1 shadow-2xs">
                                     <i class="fa-solid fa-clipboard-check"></i>
                                     <span>Opname</span>
                                 </button>
                             </td>
                         `;
+                        const quickBtn = tr.querySelector('.btn-quick-opname');
+                        if (quickBtn) {
+                            quickBtn.addEventListener('click', () => openOpnameModal(item, 'Manual'));
+                        }
                     } else {
                         const isAsetBaik = item.statusAset === 'Baik';
                         const asetBadge = isAsetBaik
-                            ? `<span class="bg-emerald-100 text-emerald-800 font-semibold px-2 py-0.5 rounded-full text-[10px]">${item.statusAset}</span>`
-                            : `<span class="bg-rose-100 text-rose-800 font-bold px-2 py-0.5 rounded-full text-[10px]">${item.statusAset}</span>`;
+                            ? `<span class="bg-emerald-100 text-emerald-800 font-semibold px-2 py-0.5 rounded-full text-[10px]">${escapeHtml(item.statusAset)}</span>`
+                            : `<span class="bg-rose-100 text-rose-800 font-bold px-2 py-0.5 rounded-full text-[10px]">${escapeHtml(item.statusAset)}</span>`;
         
                         const isLabelBaik = item.statusLabel === 'Baik';
                         const labelBadge = isLabelBaik
                             ? `<span class="bg-emerald-50 text-emerald-700 font-medium px-2 py-0.5 rounded text-[10px]">Baik</span>`
-                            : `<span class="bg-amber-100 text-amber-800 font-bold px-2 py-0.5 rounded text-[10px]">${item.statusLabel}</span>`;
+                            : `<span class="bg-amber-100 text-amber-800 font-bold px-2 py-0.5 rounded text-[10px]">${escapeHtml(item.statusLabel)}</span>`;
         
                         let fotoHtml = `<span class="text-slate-400 italic">-</span>`;
                         if (item.asetTemuan) {
                             if (item.asetTemuan.startsWith("http")) {
-                                fotoHtml = `<a href="${item.asetTemuan}" target="_blank" class="px-2 py-1 bg-astra-50 text-astra-700 border border-astra-200 rounded font-bold text-[10px]">Drive</a>`;
+                                fotoHtml = `<a href="${escapeHtml(item.asetTemuan)}" target="_blank" rel="noopener noreferrer" class="px-2 py-1 bg-astra-50 text-astra-700 border border-astra-200 rounded font-bold text-[10px]">Drive</a>`;
                             } else {
-                                fotoHtml = `<button onclick="viewPhotoDetail('${item.asetTemuan}')" class="p-0.5 rounded border border-rose-300 bg-white"><img src="${item.asetTemuan}" class="w-8 h-8 object-cover rounded"></button>`;
+                                fotoHtml = `<button type="button" onclick="viewPhotoDetail('${escapeHtml(item.asetTemuan)}')" class="p-0.5 rounded border border-rose-300 bg-white"><img src="${escapeHtml(item.asetTemuan)}" class="w-8 h-8 object-cover rounded"></button>`;
                             }
                         }
         
                         tr.innerHTML = `
                             <td class="py-2.5 px-3 text-center font-mono text-slate-400 font-bold">${index + 1}</td>
-                            <td class="py-2.5 px-3 font-mono text-slate-600 whitespace-nowrap">${formatDisplayDate(item.tanggalScan)}</td>
-                            <td class="py-2.5 px-3 font-mono font-bold text-slate-900 whitespace-nowrap">${item.assetId} ${item.subNumber || '0'}</td>
-                            <td class="py-2.5 px-3 font-semibold text-slate-700">${item.cabang}</td>
-                            <td class="py-2.5 px-3 font-semibold text-slate-800">${item.deskripsi}</td>
-                            <td class="py-2.5 px-3 font-mono text-slate-600">${item.lokasiSap || '-'}</td>
-                            <td class="py-2.5 px-3 font-mono font-bold text-slate-800">${item.lokasiOpname || '-'}</td>
-                            <td class="py-2.5 px-3 font-mono text-slate-500 whitespace-nowrap">${formatDisplayTime(item.waktuScan)}</td>
+                            <td class="py-2.5 px-3 font-mono text-slate-600 whitespace-nowrap">${escapeHtml(formatDisplayDate(item.tanggalScan))}</td>
+                            <td class="py-2.5 px-3 font-mono font-bold text-slate-900 whitespace-nowrap">${escapeHtml(item.assetId)} ${escapeHtml(item.subNumber || '0')}</td>
+                            <td class="py-2.5 px-3 font-semibold text-slate-700">${escapeHtml(item.cabang)}</td>
+                            <td class="py-2.5 px-3 font-semibold text-slate-800">${escapeHtml(item.deskripsi)}</td>
+                            <td class="py-2.5 px-3 font-mono text-slate-600">${escapeHtml(item.lokasiSap || '-')}</td>
+                            <td class="py-2.5 px-3 font-mono font-bold text-slate-800">${escapeHtml(item.lokasiOpname || '-')}</td>
+                            <td class="py-2.5 px-3 font-mono text-slate-500 whitespace-nowrap">${escapeHtml(formatDisplayTime(item.waktuScan))}</td>
                             <td class="py-2.5 px-3 whitespace-nowrap">${asetBadge}</td>
                             <td class="py-2.5 px-3 whitespace-nowrap">${labelBadge}</td>
                             <td class="py-2.5 px-3 text-center whitespace-nowrap">${fotoHtml}</td>
-                            <td class="py-2.5 px-3 text-slate-600 max-w-xs truncate">${item.keterangan || '-'}</td>
+                            <td class="py-2.5 px-3 text-slate-600 max-w-xs truncate">${escapeHtml(item.keterangan || '-')}</td>
                         `;
                     }
                     tbody.appendChild(tr);
@@ -2249,8 +2271,8 @@
 
             const titleMap = {
                 dashboard: "Stock Opname",
-                masterdata: "Daftar Aset ",
-                history: "Riwayat Scan ",
+                masterdata: "Daftar Aset",
+                history: "Riwayat Scan",
                 recap: "Rekap Aset & Ruangan",
                 settings: "Pengaturan",
                 scannedAssetView: "Rincian Filter Aset"
@@ -2263,7 +2285,10 @@
             }
 
             if (viewName === 'dashboard') renderKPIs();
-            if (viewName === 'masterdata') renderTable();
+            if (viewName === 'masterdata') {
+                populateRoomFilterDropdown();
+                renderTable();
+            }
             if (viewName === 'history') renderHistoryTable();
             if (viewName === 'recap') renderRecapView();
             if (viewName === 'scannedAssetView') renderDynamicFilteredTable();
@@ -2271,6 +2296,7 @@
 
         function onBranchChange() {
             currentPage = 1;
+            populateRoomFilterDropdown();
             renderKPIs();
             renderTable();
             renderHistoryTable();
@@ -2428,7 +2454,7 @@
                 return;
             }
         
-            const saveBtn = document.querySelector('button[onclick="saveOpnameVerification()"]');
+            const saveBtn = document.getElementById('btnSaveOpname');
             if (saveBtn) {
                 saveBtn.disabled = true;
                 saveBtn.innerHTML = `<i class="fa-solid fa-spinner animate-spin mr-1"></i> Menyimpan ke Database...`;
@@ -2440,7 +2466,7 @@
             const dateStr = now.toLocaleDateString('id-ID', { day: '2-digit', month: '2-digit', year: 'numeric' }).replace(/\//g, '.');
             const timeStr = now.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
         
-            const lokasiActual = safeGetValue('opnameInputLokasiActual', activeOpnameAsset.lokasi).trim();
+            const lokasiActual = safeGetValue('opnameInputLokasiActual', activeOpnameAsset.lokasi).trim().toUpperCase();
             const metodeInputEl = document.getElementById('opnameModalInputMetodeFinal');
             let metode = (metodeInputEl && metodeInputEl.value.trim()) ? metodeInputEl.value.trim() : (activeOpnameMethod || 'Scan');
             metode = metode.toLowerCase().includes('manual') ? 'Manual' : 'Scan';
@@ -2479,6 +2505,7 @@
                 renderKPIs();
                 renderHistoryTable();
                 renderRecapView();
+                renderDynamicFilteredTable();
                 loadLogsFromServer(true);
             })
             .catch(err => {
@@ -2491,6 +2518,7 @@
                 renderKPIs();
                 renderHistoryTable();
                 renderRecapView();
+                renderDynamicFilteredTable();
                 showToast('Tersimpan Lokal', `Data dicatat di perangkat.`, 'info');
             });
         }
@@ -2617,7 +2645,7 @@
                 if (scopedLogs.length === 0) {
                     feedContainer.innerHTML = `<div class="text-center py-6 text-slate-400 text-xs">Belum ada aktivitas scan untuk cabang ini.</div>`;
                 } else {
-                    const latestLogs = [...scopedLogs].reverse().slice(0, 3);
+                    const latestLogs = scopedLogs.slice(0, 3);
                     let feedHtml = '';
                     
                     latestLogs.forEach(log => {
@@ -2628,14 +2656,14 @@
                             <div class="bg-slate-50 p-3 rounded-xl border border-slate-200/80 flex items-center justify-between gap-3 text-xs">
                                 <div class="min-w-0 flex-1">
                                     <div class="flex items-center gap-2">
-                                        <p class="font-bold text-slate-900 truncate font-mono text-xs">${log.assetId}</p>
-                                        <span class="text-[9px] font-bold px-1.5 py-0.5 rounded bg-slate-200 text-slate-700 shrink-0">${log.subNumber || '0'}</span>
+                                        <p class="font-bold text-slate-900 truncate font-mono text-xs">${escapeHtml(log.assetId)}</p>
+                                        <span class="text-[9px] font-bold px-1.5 py-0.5 rounded bg-slate-200 text-slate-700 shrink-0">${escapeHtml(log.subNumber || '0')}</span>
                                     </div>
-                                    <p class="text-[11px] text-slate-500 truncate mt-0.5">${log.deskripsi || '-'}</p>
+                                    <p class="text-[11px] text-slate-500 truncate mt-0.5">${escapeHtml(log.deskripsi || '-')}</p>
                                 </div>
                                 <div class="text-right shrink-0">
-                                    <span class="text-[10px] bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded font-mono block">${displayTime}</span>
-                                    <span class="text-[10px] text-slate-400 font-semibold mt-1 block">${log.lokasiOpname || log.lokasiSap || '-'}</span>
+                                    <span class="text-[10px] bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded font-mono block">${escapeHtml(displayTime)}</span>
+                                    <span class="text-[10px] text-slate-400 font-semibold mt-1 block">${escapeHtml(log.lokasiOpname || log.lokasiSap || '-')}</span>
                                 </div>
                             </div>
                         `;
@@ -2660,7 +2688,7 @@
                                     item.deskripsi.toLowerCase().includes(searchVal) ||
                                     item.lokasi.toLowerCase().includes(searchVal);
                 const matchBranch = branchVal === 'ALL' || item.cabang.startsWith(branchVal) || branchVal.startsWith(item.cabang);
-                const matchRoom = roomVal === 'ALL' || item.lokasi === roomVal;
+                const matchRoom = roomVal === 'ALL' || String(item.lokasi || "").trim().toUpperCase() === roomVal;
 
                 return matchSearch && matchBranch && matchRoom;
             });
@@ -2685,24 +2713,28 @@
                     const tr = document.createElement('tr');
                     tr.className = "hover:bg-slate-50 transition border-b border-slate-100 text-xs";
                     tr.innerHTML = `
-                        <td class="py-3 px-3 sm:px-4 font-mono font-bold text-slate-900">${item.id}</td>
-                        <td class="py-3 px-3 sm:px-4 font-mono text-slate-600">${item.subNumber || '0'}</td>
-                        <td class="py-3 px-3 sm:px-4 text-slate-700 font-semibold">${item.cabang}</td>
-                        <td class="py-3 px-3 sm:px-4 font-semibold text-slate-800">${item.deskripsi}</td>
-                        <td class="py-3 px-3 sm:px-4 text-slate-500 font-mono text-[11px]">${item.capitalizedOn || '-'}</td>
-                        <td class="py-3 px-3 sm:px-4"><span class="bg-slate-100 text-slate-700 px-2.5 py-0.5 rounded font-mono text-[11px]">${item.lokasi}</span></td>
+                        <td class="py-3 px-3 sm:px-4 font-mono font-bold text-slate-900">${escapeHtml(item.id)}</td>
+                        <td class="py-3 px-3 sm:px-4 font-mono text-slate-600">${escapeHtml(item.subNumber || '0')}</td>
+                        <td class="py-3 px-3 sm:px-4 text-slate-700 font-semibold">${escapeHtml(item.cabang)}</td>
+                        <td class="py-3 px-3 sm:px-4 font-semibold text-slate-800">${escapeHtml(item.deskripsi)}</td>
+                        <td class="py-3 px-3 sm:px-4 text-slate-500 font-mono text-[11px]">${escapeHtml(item.capitalizedOn || '-')}</td>
+                        <td class="py-3 px-3 sm:px-4"><span class="bg-slate-100 text-slate-700 px-2.5 py-0.5 rounded font-mono text-[11px]">${escapeHtml(item.lokasi)}</span></td>
                         <td class="py-3 px-3 sm:px-4 text-center">
                             <div class="flex items-center justify-center gap-1.5">
-                                <button onclick='openOpnameModal({"id": "${item.id}", "subNumber": "${item.subNumber || '0'}", "cabang": "${item.cabang}", "deskripsi": "${item.deskripsi.replace(/'/g, "\\'")}", "lokasi": "${item.lokasi}"}, "Manual")' class="bg-daihatsu-50 hover:bg-daihatsu-100 text-daihatsu-700 border border-daihatsu-200 px-2.5 py-1 rounded-lg text-xs font-bold transition inline-flex items-center gap-1 shadow-2xs">
+                                <button type="button" class="btn-row-opname bg-daihatsu-50 hover:bg-daihatsu-100 text-daihatsu-700 border border-daihatsu-200 px-2.5 py-1 rounded-lg text-xs font-bold transition inline-flex items-center gap-1 shadow-2xs">
                                     <i class="fa-solid fa-clipboard-check"></i>
                                     <span>Opname</span>
                                 </button>
-                                <button onclick="deleteMasterAsset('${item.id}', '${item.subNumber || '0'}')" class="px-2 py-1 bg-red-50 hover:bg-red-100 text-red-600 rounded-lg text-xs font-bold transition flex items-center justify-center" title="Hapus Aset">
+                                <button type="button" class="btn-row-delete px-2 py-1 bg-red-50 hover:bg-red-100 text-red-600 rounded-lg text-xs font-bold transition flex items-center justify-center" title="Hapus Aset">
                                     <i class="fa-solid fa-trash-can"></i>
                                 </button>
                             </div>
                         </td>
                     `;
+                    const opnameBtn = tr.querySelector('.btn-row-opname');
+                    const deleteBtn = tr.querySelector('.btn-row-delete');
+                    if (opnameBtn) opnameBtn.addEventListener('click', () => openOpnameModal(item, 'Manual'));
+                    if (deleteBtn) deleteBtn.addEventListener('click', () => deleteMasterAsset(item.id, item.subNumber || '0'));
                     tbody.appendChild(tr);
                 });
             }
@@ -2770,8 +2802,10 @@
                                 return !(idMatch && subMatch);
                             });
 
+                            populateRoomFilterDropdown();
                             renderTable();
                             renderKPIs();
+                            renderRecapView();
                             showToast('Berhasil Dihapus!', `Aset ${assetId} telah dihapus permanen.`, 'success');
                         } else {
                             showToast('Gagal Hapus', (res && res.message) || 'Server gagal menghapus data dari database.', 'warning');
@@ -2801,6 +2835,10 @@
             
             if (str.includes("GMT") || str.includes("00:00:00")) {
                 str = str.split("00:00:00")[0].trim();
+            }
+
+            if (/^\d{2}\.\d{2}\.\d{4}$/.test(str)) {
+                return str;
             }
 
             let d = new Date(str);
@@ -3052,19 +3090,20 @@
             if (!tbody) return;
             tbody.innerHTML = '';
 
-            const filtered = historyLogs.filter(item => {
+            const branchScopedLogs = branchVal === 'ALL' ? historyLogs : historyLogs.filter(item => item.cabang.startsWith(branchVal) || branchVal.startsWith(item.cabang));
+
+            const filtered = branchScopedLogs.filter(item => {
                 const searchTarget = `${item.assetId} ${item.subNumber} ${item.deskripsi} ${item.lokasiSap} ${item.lokasiOpname} ${item.keterangan || ''}`.toLowerCase();
                 const matchSearch = searchTarget.includes(searchVal);
                 const matchMethod = methodVal === 'ALL' || item.metodeOpname === methodVal;
-                const matchBranch = branchVal === 'ALL' || item.cabang.startsWith(branchVal) || branchVal.startsWith(item.cabang);
 
-                return matchSearch && matchMethod && matchBranch;
+                return matchSearch && matchMethod;
             });
 
-            safeSetText('histStatTotal', historyLogs.length);
-            safeSetText('histStatValid', historyLogs.filter(h => h.statusAset === 'Baik').length);
-            safeSetText('histStatDamaged', historyLogs.filter(h => h.statusAset !== 'Baik' || h.asetTemuan).length);
-            safeSetText('histStatLabelIssue', historyLogs.filter(h => h.statusLabel !== 'Baik').length);
+            safeSetText('histStatTotal', branchScopedLogs.length);
+            safeSetText('histStatValid', branchScopedLogs.filter(h => h.statusAset === 'Baik').length);
+            safeSetText('histStatDamaged', branchScopedLogs.filter(h => h.statusAset !== 'Baik' || h.asetTemuan).length);
+            safeSetText('histStatLabelIssue', branchScopedLogs.filter(h => h.statusLabel !== 'Baik').length);
 
             if (filtered.length === 0) {
                 tbody.innerHTML = `
@@ -3078,13 +3117,13 @@
                 filtered.forEach((item, index) => {
                     const isAsetBaik = item.statusAset === 'Baik';
                     const asetBadge = isAsetBaik
-                        ? `<span class="bg-emerald-100 text-emerald-800 font-semibold px-2 py-0.5 rounded-full text-[10px]"><i class="fa-solid fa-circle-check text-[9px] mr-1"></i>${item.statusAset}</span>`
-                        : `<span class="bg-rose-100 text-rose-800 font-bold px-2 py-0.5 rounded-full text-[10px]"><i class="fa-solid fa-circle-exclamation text-[9px] mr-1"></i>${item.statusAset}</span>`;
+                        ? `<span class="bg-emerald-100 text-emerald-800 font-semibold px-2 py-0.5 rounded-full text-[10px]"><i class="fa-solid fa-circle-check text-[9px] mr-1"></i>${escapeHtml(item.statusAset)}</span>`
+                        : `<span class="bg-rose-100 text-rose-800 font-bold px-2 py-0.5 rounded-full text-[10px]"><i class="fa-solid fa-circle-exclamation text-[9px] mr-1"></i>${escapeHtml(item.statusAset)}</span>`;
 
                     const isLabelBaik = item.statusLabel === 'Baik';
                     const labelBadge = isLabelBaik
                         ? `<span class="bg-emerald-50 text-emerald-700 font-medium px-2 py-0.5 rounded text-[10px] border border-emerald-200">Baik</span>`
-                        : `<span class="bg-amber-100 text-amber-800 font-bold px-2 py-0.5 rounded text-[10px] border border-amber-300">${item.statusLabel}</span>`;
+                        : `<span class="bg-amber-100 text-amber-800 font-bold px-2 py-0.5 rounded text-[10px] border border-amber-300">${escapeHtml(item.statusLabel)}</span>`;
 
                     const metodeBadge = item.metodeOpname === 'Scan'
                         ? `<span class="font-medium text-astra-700 bg-astra-50 px-2 py-0.5 rounded border border-astra-200"><i class="fa-solid fa-barcode text-[9px] mr-1"></i>Scan</span>`
@@ -3094,9 +3133,9 @@
                     if (item.asetTemuan) {
                         let imgSrc = item.asetTemuan;
                         if (imgSrc.startsWith("http")) {
-                            fotoHtml = `<div class="flex items-center justify-center"><a href="${imgSrc}" target="_blank" title="Buka foto di Google Drive" class="px-2.5 py-1 bg-astra-50 hover:bg-astra-100 text-astra-700 border border-astra-200 rounded-lg text-[11px] font-bold transition flex items-center gap-1"><i class="fa-solid fa-arrow-up-right-from-square"></i> Lihat Drive</a></div>`;
+                            fotoHtml = `<div class="flex items-center justify-center"><a href="${escapeHtml(imgSrc)}" target="_blank" rel="noopener noreferrer" title="Buka foto di Google Drive" class="px-2.5 py-1 bg-astra-50 hover:bg-astra-100 text-astra-700 border border-astra-200 rounded-lg text-[11px] font-bold transition flex items-center gap-1"><i class="fa-solid fa-arrow-up-right-from-square"></i> Lihat Drive</a></div>`;
                         } else {
-                            fotoHtml = `<div class="flex items-center justify-center"><button onclick="viewPhotoDetail('${imgSrc}')" class="p-0.5 rounded-lg border border-rose-300 bg-white"><img src="${imgSrc}" alt="Temuan" class="w-9 h-9 object-cover rounded"></button></div>`;
+                            fotoHtml = `<div class="flex items-center justify-center"><button type="button" onclick="viewPhotoDetail('${escapeHtml(imgSrc)}')" class="p-0.5 rounded-lg border border-rose-300 bg-white"><img src="${escapeHtml(imgSrc)}" alt="Temuan" class="w-9 h-9 object-cover rounded"></button></div>`;
                         }
                     }
 
@@ -3104,20 +3143,20 @@
                     tr.className = "hover:bg-slate-50 transition border-b border-slate-100 text-xs";
                     tr.innerHTML = `
                         <td class="py-2.5 px-3 text-center font-mono text-slate-400 text-[11px] font-bold">${index + 1}</td>
-                        <td class="py-2.5 px-3 font-mono text-slate-600 whitespace-nowrap">${formatDisplayDate(item.tanggalScan)}</td>
-                        <td class="py-2.5 px-3 font-mono font-bold text-slate-900 whitespace-nowrap">${item.assetId} ${item.subNumber || '0'}</td>
-                        <td class="py-2.5 px-3 font-semibold text-slate-700">${item.cabang}</td>
-                        <td class="py-2.5 px-3 font-semibold text-slate-800">${item.deskripsi}</td>
-                        <td class="py-2.5 px-3 font-mono text-slate-600 bg-slate-50/60">${item.lokasiSap}</td>
-                        <td class="py-2.5 px-3 font-mono font-bold ${item.lokasiSap !== item.lokasiOpname ? 'text-amber-700 bg-amber-50' : 'text-slate-800'}">${item.lokasiOpname}</td>
-                        <td class="py-2.5 px-3 font-mono text-slate-500 whitespace-nowrap">${formatDisplayTime(item.waktuScan)}</td>
+                        <td class="py-2.5 px-3 font-mono text-slate-600 whitespace-nowrap">${escapeHtml(formatDisplayDate(item.tanggalScan))}</td>
+                        <td class="py-2.5 px-3 font-mono font-bold text-slate-900 whitespace-nowrap">${escapeHtml(item.assetId)} ${escapeHtml(item.subNumber || '0')}</td>
+                        <td class="py-2.5 px-3 font-semibold text-slate-700">${escapeHtml(item.cabang)}</td>
+                        <td class="py-2.5 px-3 font-semibold text-slate-800">${escapeHtml(item.deskripsi)}</td>
+                        <td class="py-2.5 px-3 font-mono text-slate-600 bg-slate-50/60">${escapeHtml(item.lokasiSap)}</td>
+                        <td class="py-2.5 px-3 font-mono font-bold ${item.lokasiSap !== item.lokasiOpname ? 'text-amber-700 bg-amber-50' : 'text-slate-800'}">${escapeHtml(item.lokasiOpname)}</td>
+                        <td class="py-2.5 px-3 font-mono text-slate-500 whitespace-nowrap">${escapeHtml(formatDisplayTime(item.waktuScan))}</td>
                         <td class="py-2.5 px-3 whitespace-nowrap">${asetBadge}</td>
                         <td class="py-2.5 px-3 whitespace-nowrap">${labelBadge}</td>
                         <td class="py-2.5 px-3 whitespace-nowrap">${metodeBadge}</td>
                         <td class="py-2.5 px-3 text-center whitespace-nowrap">${fotoHtml}</td>
-                        <td class="py-2.5 px-3 text-slate-600 max-w-xs truncate" title="${item.keterangan || '-'}">${item.keterangan || '-'}</td>
+                        <td class="py-2.5 px-3 text-slate-600 max-w-xs truncate" title="${escapeHtml(item.keterangan || '-')}">${escapeHtml(item.keterangan || '-')}</td>
                         <td class="py-2.5 px-3 text-center whitespace-nowrap">
-                            <button onclick="deleteSingleLog('${item.assetId}', '${item.subNumber || '0'}')" class="p-1.5 bg-rose-50 hover:bg-rose-100 text-rose-600 rounded-lg transition" title="Hapus log ini">
+                            <button type="button" onclick="deleteSingleLog('${escapeHtml(item.assetId)}', '${escapeHtml(item.subNumber || '0')}')" class="p-1.5 bg-rose-50 hover:bg-rose-100 text-rose-600 rounded-lg transition" title="Hapus log ini">
                                 <i class="fa-solid fa-trash-can text-xs"></i>
                             </button>
                         </td>
@@ -3126,7 +3165,7 @@
                 });
             }
 
-            safeSetText('historyTableCountSummary', `Menampilkan ${filtered.length} dari total ${historyLogs.length} riwayat log pemindaian`);
+            safeSetText('historyTableCountSummary', `Menampilkan ${filtered.length} dari total ${branchScopedLogs.length} riwayat log pemindaian`);
         }
 
         function exportHistoryToExcel() {
@@ -3266,6 +3305,9 @@
             if (badgeDot) badgeDot.className = "w-2 h-2 rounded-full bg-emerald-500 animate-pulse";
             if (laser) laser.style.display = "block";
 
+            const btnRescan = document.getElementById('btnRescanCamera');
+            if (btnRescan) btnRescan.classList.add('hidden');
+
             const actionBtn = document.getElementById('btnProcessCameraPreview');
             if (actionBtn) {
                 actionBtn.disabled = true;
@@ -3391,8 +3433,8 @@
                             <div class="text-emerald-700 font-bold flex items-center gap-1 mb-0.5">
                                 <i class="fa-solid fa-circle-check"></i> Aset Ditemukan di Database!
                             </div>
-                            <p class="font-bold text-slate-900">${foundAsset.deskripsi}</p>
-                            <p class="text-[11px] text-slate-500 font-mono">Cabang: ${foundAsset.cabang} | Ruangan: ${foundAsset.lokasi}</p>
+                            <p class="font-bold text-slate-900">${escapeHtml(foundAsset.deskripsi)}</p>
+                            <p class="text-[11px] text-slate-500 font-mono">Cabang: ${escapeHtml(foundAsset.cabang)} | Ruangan: ${escapeHtml(foundAsset.lokasi)}</p>
                         `;
                     }
         
@@ -3476,7 +3518,7 @@
 
                 let roomOptionsHtml = '<option value="ALL">Semua Ruangan</option>';
                 uniqueRooms.forEach(r => {
-                    roomOptionsHtml += `<option value="${r}">${r}</option>`;
+                    roomOptionsHtml += `<option value="${escapeHtml(r)}">${escapeHtml(r)}</option>`;
                 });
                 roomSelect.innerHTML = roomOptionsHtml;
                 if (uniqueRooms.includes(currentRoomVal)) {
@@ -3559,10 +3601,10 @@
 
                         rowsHtml += `
                             <tr class="hover:bg-slate-50 transition border-b border-slate-100 text-xs">
-                                <td class="py-2.5 px-3 font-mono font-bold text-slate-900">${item.id}</td>
-                                <td class="py-2.5 px-3 font-mono text-slate-600">${item.subNumber || '0'}</td>
-                                <td class="py-2.5 px-3 font-semibold text-slate-800">${item.deskripsi}</td>
-                                <td class="py-2.5 px-3 text-slate-500 font-mono text-[11px]">${item.capitalizedOn || '-'}</td>
+                                <td class="py-2.5 px-3 font-mono font-bold text-slate-900">${escapeHtml(item.id)}</td>
+                                <td class="py-2.5 px-3 font-mono text-slate-600">${escapeHtml(item.subNumber || '0')}</td>
+                                <td class="py-2.5 px-3 font-semibold text-slate-800">${escapeHtml(item.deskripsi)}</td>
+                                <td class="py-2.5 px-3 text-slate-500 font-mono text-[11px]">${escapeHtml(item.capitalizedOn || '-')}</td>
                                 <td class="py-2.5 px-3">${statusTag}</td>
                             </tr>
                         `;
@@ -3573,7 +3615,7 @@
                             <div class="bg-slate-100 px-3 sm:px-4 py-2.5 flex flex-col sm:flex-row sm:items-center justify-between border-b border-slate-200 gap-1.5">
                                 <div class="flex items-center space-x-2">
                                     <i class="fa-solid fa-door-open text-astra-600 text-sm"></i>
-                                    <h4 class="font-bold text-slate-800 text-xs sm:text-sm">Ruangan: ${roomName}</h4>
+                                    <h4 class="font-bold text-slate-800 text-xs sm:text-sm">Ruangan: ${escapeHtml(roomName)}</h4>
                                     <span class="bg-astra-100 text-astra-800 text-[10px] font-bold px-2 py-0.5 rounded-full">${roomItems.length} Unit</span>
                                 </div>
                                 <div class="flex items-center space-x-2 text-[10px] sm:text-[11px]">
@@ -3605,8 +3647,8 @@
                     <div class="p-4 sm:p-5 bg-slate-900 text-white flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-800">
                         <div>
                             <div class="flex items-center space-x-2">
-                                <span class="bg-daihatsu-600 text-white text-[10px] font-bold px-2 py-0.5 rounded">${b}</span>
-                                <h3 class="font-bold text-sm sm:text-base text-white">${branchLabel}</h3>
+                                <span class="bg-daihatsu-600 text-white text-[10px] font-bold px-2 py-0.5 rounded">${escapeHtml(b)}</span>
+                                <h3 class="font-bold text-sm sm:text-base text-white">${escapeHtml(branchLabel)}</h3>
                             </div>
                             <p class="text-xs text-slate-400 mt-0.5">Total: ${branchTotal} Asset | Terscan: ${branchScanned} | Belum: ${branchPending}</p>
                         </div>
@@ -3673,13 +3715,15 @@
             const selectEl = document.getElementById('roomFilter');
             if (!selectEl) return;
         
+            const selectedBranch = safeGetValue('branchSelector', 'ALL');
             const currentSelected = selectEl.value;
-            const uniqueRooms = [...new Set(assets.map(a => String(a.lokasi || "").trim().toUpperCase()))].filter(Boolean);
+            const scopedAssets = selectedBranch === 'ALL' ? assets : assets.filter(a => a.cabang.startsWith(selectedBranch) || selectedBranch.startsWith(a.cabang));
+            const uniqueRooms = [...new Set(scopedAssets.map(a => String(a.lokasi || "").trim().toUpperCase()))].filter(Boolean);
             uniqueRooms.sort();
         
             let html = '<option value="ALL">Semua Ruangan</option>';
             uniqueRooms.forEach(room => {
-                html += `<option value="${room}">${room}</option>`;
+                html += `<option value="${escapeHtml(room)}">${escapeHtml(room)}</option>`;
             });
         
             selectEl.innerHTML = html;
@@ -3908,32 +3952,50 @@
             openOpnameModal(foundAsset, 'Manual');
         }
 
-        // --- PWA INSTALLATION & SERVICE WORKER ---
+        // --- PWA INSTALLATION, DEVICE DETECTION & SERVICE WORKER ---
+        const isIOSDevice = /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+            (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+        const isAndroidDevice = /Android/i.test(navigator.userAgent);
+
+        function checkIsStandaloneMode() {
+            return window.matchMedia('(display-mode: standalone)').matches ||
+                window.navigator.standalone === true ||
+                document.referrer.includes('android-app://');
+        }
+
+        // Bersihkan false-flag di localStorage jika aplikasi tidak lagi berjalan dalam mode standalone
+        try {
+            if (!checkIsStandaloneMode()) {
+                localStorage.removeItem('asv_pwa_installed');
+            }
+        } catch (e) {}
+
         function updatePwaStatusUI() {
-            const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
-            const titleEl = document.getElementById('pwaPromptStatusTitle');
-            const descEl = document.getElementById('pwaPromptStatusDesc');
+            const isStandalone = checkIsStandaloneMode();
+            const mainBtn = document.getElementById('btnInstallPwaMain');
             const mainBtnText = document.getElementById('btnInstallPwaMainText');
             const inlineHelper = document.getElementById('pwaInlineHelper');
 
             if (isStandalone) {
-                if (titleEl) titleEl.innerText = 'Aplikasi Sudah Terpasang';
-                if (descEl) descEl.innerText = 'Anda sedang menjalankan aplikasi ASV dalam mode aplikasi mandiri.';
-                if (mainBtnText) mainBtnText.innerText = 'Aplikasi Sudah Terpasang';
+                if (mainBtnText) mainBtnText.innerText = 'Aplikasi Sedang Berjalan (Mode App) ✓';
+                if (mainBtn) {
+                    mainBtn.classList.remove('bg-emerald-600', 'hover:bg-emerald-500');
+                    mainBtn.classList.add('bg-slate-700', 'cursor-default', 'opacity-90');
+                }
                 if (inlineHelper) inlineHelper.classList.add('hidden');
                 return;
             }
 
+            if (mainBtn) {
+                mainBtn.classList.remove('bg-slate-700', 'cursor-default', 'opacity-90');
+                mainBtn.classList.add('bg-emerald-600', 'hover:bg-emerald-500');
+            }
+
             if (window.__deferredPwaPrompt) {
-                if (titleEl) titleEl.innerText = 'Siap Pasang Otomatis (1-Klik)';
-                if (descEl) descEl.innerText = 'Browser siap! Klik tombol Pasang untuk memunculkan pop-up instalasi.';
-                if (mainBtnText) mainBtnText.innerText = 'Instal Aplikasi Sekarang (1-Klik)';
+                if (mainBtnText) mainBtnText.innerText = 'Pasang ke Layar Utama (1-Klik)';
                 if (inlineHelper) inlineHelper.classList.add('hidden');
             } else {
-                if (titleEl) titleEl.innerText = 'Menunggu Izin Pop-Up Browser';
-                if (descEl) {
-                    descEl.innerText = 'Jika pop-up otomatis belum muncul, tekan ikon titik tiga (⋮) di pojok kanan atas Chrome lalu pilih "Instal Aplikasi".';
-                }
+                if (mainBtnText) mainBtnText.innerText = 'Pasang ke Layar Utama';
             }
         }
         window.updatePwaStatusUI = updatePwaStatusUI;
@@ -3942,11 +4004,23 @@
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('/sw.js', { scope: '/' })
                     .then(reg => {
-                        console.log('Service Worker ASV terdaftar:', reg.scope);
+                        console.log('[PWA] Service Worker ASV terdaftar:', reg.scope);
                         updatePwaStatusUI();
+
+                        // Deteksi otomatis pembaruan versi aplikasi
+                        reg.addEventListener('updatefound', () => {
+                            const newWorker = reg.installing;
+                            if (newWorker) {
+                                newWorker.addEventListener('statechange', () => {
+                                    if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                                        showToast('Pembaruan Tersedia', 'Versi baru ASV System siap! Muat ulang halaman untuk memperbarui.', 'info');
+                                    }
+                                });
+                            }
+                        });
                     })
                     .catch(err => {
-                        console.warn('Gagal mendaftarkan Service Worker:', err);
+                        console.warn('[PWA] Gagal mendaftarkan Service Worker:', err);
                         updatePwaStatusUI();
                     });
             });
@@ -3954,38 +4028,53 @@
 
         window.addEventListener('appinstalled', () => {
             window.__deferredPwaPrompt = null;
-            closePwaGuideModal();
+            try {
+                localStorage.setItem('asv_pwa_installed', 'true');
+            } catch (e) {}
+            closeAndroidPwaModal();
+            closeIosPwaModal();
             updatePwaStatusUI();
             showToast('Aplikasi Terpasang!', 'ASV System berhasil dipasang ke layar utama perangkat Anda.', 'success');
         });
 
-        function openPwaGuideModal() {
-            updatePwaStatusUI();
-            const modalAlert = document.getElementById('pwaModalAlertBox');
-            if (modalAlert) modalAlert.classList.add('hidden');
-            const modal = document.getElementById('pwaGuideModal');
+        function openAndroidPwaModal(fromSwitch = false) {
+            if (fromSwitch) closeIosPwaModal();
+            const modal = document.getElementById('androidPwaModal');
             if (modal) modal.classList.remove('hidden');
         }
 
-        function closePwaGuideModal() {
-            const modal = document.getElementById('pwaGuideModal');
+        function closeAndroidPwaModal() {
+            const modal = document.getElementById('androidPwaModal');
             if (modal) modal.classList.add('hidden');
         }
 
-        function showPwaModalFeedback(title, descHtml) {
-            const modalAlert = document.getElementById('pwaModalAlertBox');
-            const modalAlertTitle = document.getElementById('pwaModalAlertTitle');
-            const modalAlertDesc = document.getElementById('pwaModalAlertDesc');
-            if (modalAlert && modalAlertTitle && modalAlertDesc) {
-                modalAlertTitle.innerText = title;
-                modalAlertDesc.innerHTML = descHtml;
-                modalAlert.classList.remove('hidden');
-                modalAlert.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        function openIosPwaModal(fromSwitch = false) {
+            if (fromSwitch) closeAndroidPwaModal();
+            const modal = document.getElementById('iosPwaModal');
+            if (modal) modal.classList.remove('hidden');
+        }
+
+        function closeIosPwaModal() {
+            const modal = document.getElementById('iosPwaModal');
+            if (modal) modal.classList.add('hidden');
+        }
+
+        function openSmartPwaGuide() {
+            if (isIOSDevice) {
+                openIosPwaModal();
+            } else {
+                openAndroidPwaModal();
             }
         }
 
         async function triggerPwaInstall() {
+            if (checkIsStandaloneMode()) {
+                showToast('Mode App Aktif', 'Anda sudah menjalankan ASV System dalam mode aplikasi mandiri.', 'info');
+                return;
+            }
+
             const promptEvent = window.__deferredPwaPrompt;
+            const mainBtnText = document.getElementById('btnInstallPwaMainText');
 
             if (promptEvent) {
                 try {
@@ -3993,60 +4082,47 @@
                     const choiceResult = await promptEvent.userChoice;
                     if (choiceResult && choiceResult.outcome === 'accepted') {
                         window.__deferredPwaPrompt = null;
-                        closePwaGuideModal();
-                        updatePwaStatusUI();
-                        showToast('Menginstal Aplikasi...', 'Tunggu sebentar, ikon ASV sedang ditambahkan ke layar utama.', 'success');
+                        if (mainBtnText) mainBtnText.innerText = 'Sedang Memasang... ⏳';
+                        showToast('Menginstal Aplikasi...', 'Ikon ASV System sedang ditambahkan ke layar utama Anda.', 'success');
                     } else {
-                        showToast('Instalasi Dibatalkan', 'Anda membatalkan pop-up instalasi.', 'info');
+                        showToast('Instalasi Dibatalkan', 'Anda membatalkan pemasangan. Anda dapat mencobanya kapan saja.', 'info');
                     }
                 } catch (err) {
-                    console.warn('Prompt instalasi gagal dipanggil:', err);
-                    showToast('Gagal Memunculkan Pop-up', 'Gunakan menu titik tiga (⋮) Chrome -> Instal Aplikasi.', 'warning');
-                    showPwaModalFeedback('Gunakan Menu Browser (⋮)', 'Tekan ikon titik tiga (<strong>⋮</strong>) di pojok kanan atas browser Chrome Anda, lalu pilih menu <strong>"Instal Aplikasi"</strong>.');
+                    console.warn('[PWA] Prompt instalasi gagal dipanggil:', err);
+                    openSmartPwaGuide();
                 }
-                return;
-            }
-
-            const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
-            if (isStandalone) {
-                showToast('Sudah Terpasang', 'Aplikasi ASV sudah terpasang dan sedang dibuka dalam mode aplikasi.', 'info');
-                showPwaModalFeedback('Aplikasi Sudah Terpasang', 'Anda saat ini sudah membuka aplikasi <strong>ASV System</strong> dalam mode aplikasi mandiri.');
                 return;
             }
 
             const ua = navigator.userAgent || '';
             const isInAppBrowser = /FBAN|FBAV|Instagram|WhatsApp|Line|wv/i.test(ua);
-            const isIOS = /iPad|iPhone|iPod/.test(ua) && !window.MSStream;
             const inlineHelper = document.getElementById('pwaInlineHelper');
 
             if (isPreviewOrOfflineEnv()) {
-                const msg = 'Fitur instalasi hanya aktif saat dibuka melalui link HTTPS Vercel Anda (bukan di halaman preview editor).';
-                showToast('Buka di Link Vercel', msg, 'warning');
-                showPwaModalFeedback('Buka Melalui Link Vercel', msg);
-            } else if (isInAppBrowser) {
-                const msg = 'Anda membuka link ini dari dalam aplikasi (WhatsApp/IG). Tekan ikon titik tiga (<strong>⋮</strong>) di pojok kanan atas lalu pilih <strong>"Buka di Chrome"</strong> agar tombol instalasi aktif.';
-                showToast('Buka di Chrome / Safari', 'Tekan titik tiga (⋮) lalu pilih "Buka di Chrome" agar tombol instalasi aktif.', 'warning');
-                if (inlineHelper) {
-                    inlineHelper.innerHTML = `<i class="fa-solid fa-triangle-exclamation mr-1"></i> ${msg}`;
-                    inlineHelper.classList.remove('hidden');
-                }
-                showPwaModalFeedback('Buka di Browser Utama', msg);
-            } else if (isIOS) {
-                const msg = 'Di browser Safari iPhone/iPad, tekan ikon <strong>Share</strong> (kotak panah ke atas) di bagian bawah layar lalu pilih <strong>"Tambah ke Layar Utama"</strong>.';
-                showToast('Pengguna iPhone / iPad', 'Tekan ikon Share (kotak panah atas) di bawah Safari -> "Tambah ke Layar Utama".', 'info');
-                if (inlineHelper) {
-                    inlineHelper.innerHTML = `<i class="fa-brands fa-apple mr-1"></i> ${msg}`;
-                    inlineHelper.classList.remove('hidden');
-                }
-                showPwaModalFeedback('Instalasi di iPhone / iPad', msg);
-            } else {
-                const msg = 'Browser Chrome menahan pop-up otomatis (atau aplikasi sudah pernah terpasang — lihat tombol "Open in app" di atas). Anda juga dapat menekan menu titik tiga (<strong>⋮</strong>) di pojok kanan atas Chrome lalu pilih <strong>"Instal Aplikasi"</strong>.';
-                showToast('Tekan Titik Tiga (⋮) Chrome', 'Tekan titik tiga (⋮) di pojok kanan atas Chrome lalu pilih "Instal Aplikasi".', 'info');
+                const msg = 'Fitur instalasi PWA hanya aktif saat aplikasi dibuka melalui tautan HTTPS domain/Vercel Anda.';
+                showToast('Buka di Tautan Resmi', msg, 'warning');
                 if (inlineHelper) {
                     inlineHelper.innerHTML = `<i class="fa-solid fa-circle-info mr-1"></i> ${msg}`;
                     inlineHelper.classList.remove('hidden');
                 }
-                showPwaModalFeedback('Instal Lewat Menu Chrome (⋮)', msg);
+            } else if (isInAppBrowser) {
+                const msg = 'Anda membuka tautan dari dalam WhatsApp/IG. Ketuk ikon titik tiga (<strong>⋮</strong>) di pojok kanan atas lalu pilih <strong>"Buka di Chrome / Safari"</strong>.';
+                showToast('Buka di Browser Utama', 'Ketuk titik tiga (⋮) lalu pilih "Buka di Chrome" agar instalasi aktif.', 'warning');
+                if (inlineHelper) {
+                    inlineHelper.innerHTML = `<i class="fa-solid fa-triangle-exclamation mr-1"></i> ${msg}`;
+                    inlineHelper.classList.remove('hidden');
+                }
+            } else if (isIOSDevice) {
+                openIosPwaModal();
+            } else if (isAndroidDevice) {
+                openAndroidPwaModal();
+            } else {
+                const msg = 'Untuk memasang di Desktop/Laptop: Klik ikon instalasi di ujung kanan bilah alamat browser, atau buka Menu Browser > "Instal ASV System".';
+                showToast('Instalasi Desktop', msg, 'info');
+                if (inlineHelper) {
+                    inlineHelper.innerHTML = `<i class="fa-solid fa-desktop mr-1"></i> ${msg}`;
+                    inlineHelper.classList.remove('hidden');
+                }
             }
         }
         
