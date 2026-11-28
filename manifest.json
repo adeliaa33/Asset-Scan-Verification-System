@@ -25,13 +25,13 @@
       "src": "icon-apk-asv.png",
       "sizes": "512x512",
       "type": "image/png",
-      "purpose": "maskabel"
+      "purpose": "any"
       },
     {
-    "src": "icon-apk.png",
+    "src": "icon-apk-asv.png",
     "sizes": "512x512",
     "type": "image/png",
-    "purpose": "any"
+    "purpose": "maskable"
       }
     ]
   }
