@@ -17,21 +17,21 @@
    "icons": [
      {
       "src": "icon-apk-asv.png",
-      "sizes": "192x192",
+      "sizes": "any",
       "type": "image/png",
       "purpose": "any"
       },
      {
       "src": "icon-apk-asv.png",
-      "sizes": "512x512",
+      "sizes": "any",
       "type": "image/png",
       "purpose": "maskable"
       },
     {
     "src": "icon-apk.png",
-    "sizes": "512x512",
+    "sizes": "192X192 512x512 1254X1254",
     "type": "image/png",
-    "purpose": "any"
+    "purpose": "any maskble"
       }
     ]
   }
