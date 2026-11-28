@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Asset Scan & Verification System (ASV) - Astra Daihatsu Asset Management</title>
 
-    <!-- PWA Meta Tags & Static Manifest (Vercel Ready) -->
+    <!-- PWA Meta Tags & Static Manifest (Fixed: Tanpa crossorigin use-credentials agar terbaca sempurna di Vercel) -->
     <link rel="manifest" href="/manifest.json">
     <meta name="theme-color" content="#0f172a">
     <meta name="mobile-web-app-capable" content="yes">
@@ -14,6 +14,18 @@
     <meta name="apple-mobile-web-app-title" content="ASV System">
     <link rel="apple-touch-icon" href="/icon-apk-asv.png">
     <link rel="icon" type="image/png" href="/icon-apk-asv.png">
+
+    <!-- Tangkap event beforeinstallprompt SEAWAL MUNGKIN sebelum halaman selesai render -->
+    <script>
+        window.__deferredPwaPrompt = null;
+        window.addEventListener('beforeinstallprompt', function(e) {
+            e.preventDefault();
+            window.__deferredPwaPrompt = e;
+            if (typeof window.updatePwaStatusUI === 'function') {
+                window.updatePwaStatusUI();
+            }
+        });
+    </script>
 
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -776,15 +788,17 @@
 
                     <!-- Tombol Aksi -->
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
-                        <button onclick="triggerPwaInstall()" id="btnInstallPwaMain" class="w-full py-2.5 px-3 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs rounded-xl shadow-lg shadow-emerald-600/25 transition flex items-center justify-center gap-1.5">
+                        <button type="button" onclick="triggerPwaInstall()" id="btnInstallPwaMain" class="w-full py-2.5 px-3 bg-emerald-600 hover:bg-emerald-500 active:scale-[0.98] text-white font-bold text-xs rounded-xl shadow-lg shadow-emerald-600/25 transition flex items-center justify-center gap-1.5 cursor-pointer">
                             <i class="fa-solid fa-download"></i>
-                            <span>Download & Pasang Web APK</span>
+                            <span id="btnInstallPwaMainText">Download & Pasang Web APK</span>
                         </button>
-                        <button onclick="openPwaGuideModal()" class="w-full py-2.5 px-3 bg-white/10 hover:bg-white/15 text-white border border-white/15 font-bold text-xs rounded-xl transition flex items-center justify-center gap-1.5">
+                        <button type="button" onclick="openPwaGuideModal()" class="w-full py-2.5 px-3 bg-white/10 hover:bg-white/15 text-white border border-white/15 font-bold text-xs rounded-xl transition flex items-center justify-center gap-1.5 cursor-pointer">
                             <i class="fa-solid fa-mobile-screen-button text-sky-400"></i>
                             <span>Petunjuk HP</span>
                         </button>
                     </div>
+                    <!-- Info Status Instalasi Langsung di Kartu -->
+                    <div id="pwaInlineHelper" class="hidden bg-amber-500/15 border border-amber-400/30 rounded-xl p-3 text-[11px] text-amber-200 leading-relaxed"></div>
                 </div>   
                 
                 <!-- 1. KARTU SESI PETUGAS AKTIF -->
@@ -1382,15 +1396,15 @@
             <div class="p-4 sm:p-5 space-y-4 overflow-y-auto flex-1 custom-scrollbar text-xs text-slate-700">
                 
                 <!-- Kotak Pasang Otomatis 1-Klik -->
-                <div class="bg-emerald-50/80 border border-emerald-200 rounded-xl p-3.5 flex items-center justify-between gap-3">
+                <div id="pwaOneClickBox" class="bg-emerald-50/80 border border-emerald-200 rounded-xl p-3.5 flex items-center justify-between gap-3">
                     <div class="space-y-0.5">
                         <p class="font-bold text-emerald-900 flex items-center gap-1.5 text-xs">
                             <i class="fa-solid fa-wand-magic-sparkles text-emerald-600"></i>
-                            <span>Pasang Otomatis (1-Klik)</span>
+                            <span id="pwaPromptStatusTitle">Pasang Otomatis (1-Klik)</span>
                         </p>
-                        <p class="text-[11px] text-emerald-700 leading-snug">Browser modern Android / Chrome langsung memunculkan pop-up instalasi</p>
+                        <p id="pwaPromptStatusDesc" class="text-[11px] text-emerald-700 leading-snug">Memeriksa kesiapan instalasi dari browser...</p>
                     </div>
-                    <button onclick="triggerPwaInstall()" class="px-3.5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-xl shadow-xs transition flex items-center gap-1.5 shrink-0">
+                    <button type="button" onclick="triggerPwaInstall()" id="btnInstallPwaModalTop" class="px-3.5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-xl shadow-xs transition flex items-center gap-1.5 shrink-0 cursor-pointer">
                         <i class="fa-solid fa-download"></i>
                         <span>Pasang</span>
                     </button>
@@ -1442,10 +1456,10 @@
 
             <!-- Footer Modal -->
             <div class="bg-slate-50 px-4 py-3 border-t border-slate-200 flex items-center justify-end gap-2.5 shrink-0">
-                <button onclick="closePwaGuideModal()" class="px-4 py-2.5 bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold text-xs rounded-xl transition">
+                <button type="button" onclick="closePwaGuideModal()" class="px-4 py-2.5 bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold text-xs rounded-xl transition">
                     Tutup
                 </button>
-                <button onclick="triggerPwaInstall()" class="px-4 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-xl shadow-md transition flex items-center gap-1.5">
+                <button type="button" onclick="triggerPwaInstall()" id="btnInstallPwaModalBottom" class="px-4 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-xl shadow-md transition flex items-center gap-1.5 cursor-pointer">
                     <i class="fa-solid fa-download"></i>
                     <span>Pasang ke HP Sekarang</span>
                 </button>
@@ -3985,35 +3999,62 @@
         }
 
         // --- PWA INSTALLATION & SERVICE WORKER ---
-        let deferredPwaPrompt = null;
+        let pwaSwReady = false;
+
+        function updatePwaStatusUI() {
+            const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+            const titleEl = document.getElementById('pwaPromptStatusTitle');
+            const descEl = document.getElementById('pwaPromptStatusDesc');
+            const mainBtnText = document.getElementById('btnInstallPwaMainText');
+            const inlineHelper = document.getElementById('pwaInlineHelper');
+
+            if (isStandalone) {
+                if (titleEl) titleEl.innerText = 'Aplikasi Sudah Terpasang';
+                if (descEl) descEl.innerText = 'Anda sedang menjalankan aplikasi ASV dalam mode aplikasi mandiri.';
+                if (mainBtnText) mainBtnText.innerText = 'Aplikasi Sudah Terpasang';
+                if (inlineHelper) inlineHelper.classList.add('hidden');
+                return;
+            }
+
+            if (window.__deferredPwaPrompt) {
+                if (titleEl) titleEl.innerText = 'Siap Pasang Otomatis (1-Klik)';
+                if (descEl) descEl.innerText = 'Browser siap! Klik tombol Pasang untuk memunculkan pop-up instalasi.';
+                if (mainBtnText) mainBtnText.innerText = 'Instal Aplikasi Sekarang (1-Klik)';
+                if (inlineHelper) inlineHelper.classList.add('hidden');
+            } else {
+                if (titleEl) titleEl.innerText = 'Menunggu Izin Pop-Up Browser';
+                if (descEl) {
+                    descEl.innerText = 'Jika pop-up otomatis belum muncul, tekan ikon titik tiga (⋮) di pojok kanan atas Chrome lalu pilih "Instal Aplikasi".';
+                }
+            }
+        }
+        window.updatePwaStatusUI = updatePwaStatusUI;
 
         // Daftarkan Service Worker resmi dari /sw.js (Vercel Production)
         if ('serviceWorker' in navigator && !isPreviewOrOfflineEnv()) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('/sw.js', { scope: '/' })
-                    .then(reg => console.log('Service Worker ASV terdaftar:', reg.scope))
-                    .catch(err => console.warn('Gagal mendaftarkan Service Worker:', err));
+                    .then(reg => {
+                        pwaSwReady = true;
+                        console.log('Service Worker ASV terdaftar:', reg.scope);
+                        updatePwaStatusUI();
+                    })
+                    .catch(err => {
+                        console.warn('Gagal mendaftarkan Service Worker:', err);
+                        updatePwaStatusUI();
+                    });
             });
         }
 
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-            deferredPwaPrompt = e;
-
-            // Perbarui tampilan tombol jika prompt instalasi langsung dari browser sudah siap
-            const mainBtn = document.getElementById('btnInstallPwaMain');
-            if (mainBtn) {
-                mainBtn.innerHTML = `<i class="fa-solid fa-download"></i> <span>Instal Aplikasi Sekarang</span>`;
-            }
-        });
-
         window.addEventListener('appinstalled', () => {
-            deferredPwaPrompt = null;
+            window.__deferredPwaPrompt = null;
             closePwaGuideModal();
-            showToast('Aplikasi Terpasang!', 'ASV System berhasil dipasang ke Home Screen HP Anda.', 'success');
+            updatePwaStatusUI();
+            showToast('Aplikasi Terpasang!', 'ASV System berhasil dipasang ke layar utama perangkat Anda.', 'success');
         });
 
         function openPwaGuideModal() {
+            updatePwaStatusUI();
             const modal = document.getElementById('pwaGuideModal');
             if (modal) modal.classList.remove('hidden');
         }
@@ -4024,48 +4065,67 @@
         }
 
         async function triggerPwaInstall() {
-            // Jika browser mendukung & menyediakan prompt instalasi 1-klik
-            if (deferredPwaPrompt) {
+            const promptEvent = window.__deferredPwaPrompt;
+
+            // 1. Jika browser sudah menyiapkan event instalasi -> langsung panggil pop-up native!
+            if (promptEvent) {
                 try {
-                    await deferredPwaPrompt.prompt();
-                    const { outcome } = await deferredPwaPrompt.userChoice;
-                    if (outcome === 'accepted') {
-                        deferredPwaPrompt = null;
+                    await promptEvent.prompt();
+                    const choiceResult = await promptEvent.userChoice;
+                    if (choiceResult && choiceResult.outcome === 'accepted') {
+                        window.__deferredPwaPrompt = null;
                         closePwaGuideModal();
+                        updatePwaStatusUI();
                         showToast('Menginstal Aplikasi...', 'Tunggu sebentar, ikon ASV sedang ditambahkan ke layar utama.', 'success');
+                    } else {
+                        showToast('Instalasi Dibatalkan', 'Anda membatalkan pop-up instalasi.', 'info');
                     }
                 } catch (err) {
                     console.warn('Prompt instalasi gagal dipanggil:', err);
-                    openPwaGuideModal();
+                    showToast('Gagal Memunculkan Pop-up', 'Gunakan menu titik tiga (⋮) Chrome -> Instal Aplikasi.', 'warning');
                 }
                 return;
             }
 
-            // Cek jika aplikasi sudah berjalan dalam mode Standalone (sudah terinstal)
+            // 2. Cek jika aplikasi sudah berjalan dalam mode Standalone
             const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
             if (isStandalone) {
                 showToast('Sudah Terpasang', 'Aplikasi ASV sudah terpasang dan sedang dibuka dalam mode aplikasi.', 'info');
                 return;
             }
 
-            // Deteksi lingkungan jika dibuka di dalam WebView (WhatsApp/IG) atau iOS Safari
+            // 3. Jika pop-up otomatis belum tersedia dari Chrome, tampilkan instruksi singkat langsung tanpa memaksa modal
             const ua = navigator.userAgent || '';
             const isInAppBrowser = /FBAN|FBAV|Instagram|WhatsApp|Line|wv/i.test(ua);
             const isIOS = /iPad|iPhone|iPod/.test(ua) && !window.MSStream;
+            const inlineHelper = document.getElementById('pwaInlineHelper');
 
-            openPwaGuideModal();
-
-            if (isInAppBrowser) {
-                showToast('Buka di Chrome / Safari', 'Anda membuka link di dalam aplikasi (WA/IG). Pilih "Buka di Browser/Chrome" terlebih dahulu agar bisa diinstal.', 'warning');
+            if (isPreviewOrOfflineEnv()) {
+                showToast('Buka di Link Vercel', 'Fitur instalasi hanya aktif saat dibuka melalui link HTTPS Vercel Anda.', 'warning');
+            } else if (isInAppBrowser) {
+                showToast('Buka di Chrome / Safari', 'Tekan titik tiga (⋮) lalu pilih "Buka di Chrome" agar tombol instalasi aktif.', 'warning');
+                if (inlineHelper) {
+                    inlineHelper.innerHTML = '<i class="fa-solid fa-triangle-exclamation mr-1"></i> Anda sedang membuka link di dalam aplikasi (WA/IG). Tekan <strong>⋮</strong> di pojok kanan atas lalu pilih <strong>Buka di Chrome</strong>.';
+                    inlineHelper.classList.remove('hidden');
+                }
             } else if (isIOS) {
-                showToast('Pengguna iPhone / iPad', 'Tap tombol Bagikan (Share) di bawah Safari lalu pilih "Tambah ke Layar Utama".', 'info');
+                showToast('Pengguna iPhone / iPad', 'Tekan ikon Share (kotak panah atas) di bawah Safari -> "Tambah ke Layar Utama".', 'info');
+                if (inlineHelper) {
+                    inlineHelper.innerHTML = '<i class="fa-brands fa-apple mr-1"></i> Di Safari iPhone, tekan ikon <strong>Share</strong> di bawah layar lalu pilih <strong>Tambah ke Layar Utama</strong>.';
+                    inlineHelper.classList.remove('hidden');
+                }
             } else {
-                showToast('Gunakan Menu Browser (⋮)', 'Jika pop-up otomatis belum muncul, tekan titik tiga (⋮) di pojok kanan atas Chrome lalu pilih "Instal Aplikasi".', 'info');
+                showToast('Tekan Titik Tiga (⋮) Chrome', 'Chrome menahan pop-up otomatis. Tekan titik tiga (⋮) di pojok kanan atas Chrome lalu pilih "Instal Aplikasi".', 'info');
+                if (inlineHelper) {
+                    inlineHelper.innerHTML = '<i class="fa-solid fa-circle-info mr-1"></i> Browser Chrome Anda menahan pop-up otomatis (atau aplikasi sudah pernah terpasang). Silakan tekan menu <strong>⋮</strong> di pojok kanan atas Chrome lalu pilih <strong>"Instal Aplikasi"</strong>.';
+                    inlineHelper.classList.remove('hidden');
+                }
             }
         }
         
         // --- INITIALIZATION ---
         window.onload = function () {
+            updatePwaStatusUI();
             setInterval(() => {
                 loadLogsFromServer(true);
             }, 10000);
