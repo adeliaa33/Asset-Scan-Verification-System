@@ -15,6 +15,7 @@
     <link rel="apple-touch-icon" href="icon-apk-asv.png">
     <link rel="icon" type="image/png" href="icon-apk-asv.png">
     
+
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
 
@@ -149,7 +150,7 @@
         <div class="p-4 sm:p-5 border-b border-slate-800 flex items-center justify-between">
             <div class="flex items-center space-x-3">
                 <div class="w-10 h-10 rounded-xl bg-white/10 p-1 flex items-center justify-center shrink-0 border border-white/15 shadow-md">
-                    <img src="icon-apk-asv.png" class="w-full h-full object-contain">
+                    <img src="assets/icons/icon-apk.png" alt="Logo ASV" class="w-full h-full object-contain">
                 </div>
                 <div>
                     <div class="font-black tracking-tight text-sm sm:text-base leading-tight text-white">
@@ -225,7 +226,7 @@
 
                 <div class="flex items-center space-x-2 sm:space-x-3 min-w-0">
                     <div class="flex items-center font-black text-sm sm:text-base tracking-tight shrink-0 border-r border-slate-200 pr-2 sm:pr-3">
-                        <img src="icon-apk-asv.png" class="h-7 sm:h-8 w-auto object-contain">
+                        <img src="assets/icons/icon-apk.png" alt="Logo ASV" class="h-7 sm:h-8 w-auto object-contain">
                         <span class="text-slate-700 text-xs ml-1.5 font-semibold hidden sm:inline">| System</span>
                     </div>
                 
@@ -1364,7 +1365,7 @@
             <div class="bg-gradient-to-r from-slate-900 via-[#0f2354] to-[#132a63] text-white p-4 sm:p-5 flex items-center justify-between shrink-0">
                 <div class="flex items-center space-x-3 min-w-0">
                    <div class="w-11 h-11 rounded-2xl bg-white p-1 flex items-center justify-center shadow-md shrink-0 overflow-hidden">
-                            <img src="icon-apk-asv.png" alt="ASV Icon" class="w-full h-full object-cover rounded-xl">
+                            <img src="assets/icons/icon-apk-1.png" alt="ASV Icon" class="w-full h-full object-cover rounded-xl">
                         </div>
                     </div>
                     <div class="min-w-0">
@@ -3945,38 +3946,13 @@
         // --- PWA INSTALLATION & SERVICE WORKER ---
         let deferredPwaPrompt = null;
 
-        function setInstallButtonReady(isReady) {
-            const btnMain = document.getElementById('btnInstallPwaMain');
-            if (!btnMain) return;
-            if (isReady) {
-                btnMain.disabled = false;
-                btnMain.className = "w-full py-2.5 px-3 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs rounded-xl shadow-lg shadow-emerald-600/25 transition flex items-center justify-center gap-1.5 cursor-pointer";
-                btnMain.innerHTML = `<i class="fa-solid fa-download"></i><span>Instal Aplikasi Sekarang</span>`;
-            }
-        }
-
-        function setInstallButtonInstalled() {
-            const btnMain = document.getElementById('btnInstallPwaMain');
-            if (!btnMain) return;
-            btnMain.disabled = true;
-            btnMain.className = "w-full py-2.5 px-3 bg-slate-700 text-emerald-300 border border-emerald-500/40 font-bold text-xs rounded-xl flex items-center justify-center gap-1.5 cursor-default";
-            btnMain.innerHTML = `<i class="fa-solid fa-circle-check"></i><span>Aplikasi Sudah Terpasang</span>`;
-        }
-
-        // Cek jika aplikasi sudah dibuka dalam mode aplikasi terinstal (standalone)
-        if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true) {
-            window.addEventListener('DOMContentLoaded', setInstallButtonInstalled);
-        }
-
         window.addEventListener('beforeinstallprompt', (e) => {
             e.preventDefault();
             deferredPwaPrompt = e;
-            setInstallButtonReady(true);
         });
 
         window.addEventListener('appinstalled', () => {
             deferredPwaPrompt = null;
-            setInstallButtonInstalled();
             closePwaGuideModal();
             showToast('Aplikasi Terpasang!', 'ASV System berhasil dipasang ke Home Screen HP Anda.', 'success');
         });
@@ -3993,22 +3969,16 @@
 
         async function triggerPwaInstall() {
             if (deferredPwaPrompt) {
-                // Langsung munculkan dialog instalasi resmi Android tanpa membuka petunjuk
                 deferredPwaPrompt.prompt();
                 const { outcome } = await deferredPwaPrompt.userChoice;
                 if (outcome === 'accepted') {
                     deferredPwaPrompt = null;
-                    setInstallButtonInstalled();
                     closePwaGuideModal();
                 }
             } else {
-                // Cek apakah sudah terinstal atau browser belum siap
-                const isStandalone = window.matchMedia('(display-mode: standalone)').matches;
-                if (isStandalone) {
-                    showToast('Sudah Terpasang', 'Aplikasi ASV System sudah terinstal di perangkat Anda.', 'success');
-                } else {
-                    showToast('Info Instalasi', 'Jika aplikasi sudah terinstal cek di Layar Utama, atau ketuk titik tiga Chrome (⋮) > Instal Aplikasi.', 'info');
-                }
+                // Jika browser iOS Safari atau prompt sudah pernah muncul / berjalan di preview
+                openPwaGuideModal();
+                showToast('Petunjuk Instalasi', 'Ikuti panduan pemasangan manual Android / iOS di layar ini.', 'info');
             }
         }
 
