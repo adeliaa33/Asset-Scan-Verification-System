@@ -5,21 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Asset Scan & Verification System (ASV) - Astra Daihatsu Asset Management</title>
 
-    <!-- PWA Meta Tags & Manifest -->
-    <link rel="manifest" href="./manifest.json">
+    <!-- PWA Meta Tags & Static Manifest (Vercel Ready) -->
+    <link rel="manifest" href="/manifest.json">
     <meta name="theme-color" content="#0f172a">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="ASV System">
-    <link rel="apple-touch-icon" href="icon-apk-asv.png">
-    <link rel="icon" type="image/png" href="icon-apk-asv.png">
-    
+    <link rel="apple-touch-icon" href="/icon-apk-asv.png">
+    <link rel="icon" type="image/png" href="/icon-apk-asv.png">
 
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
 
-    <!-- Font Awesome s -->
+    <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <!-- SheetJS Excel Library -->
@@ -150,7 +149,7 @@
         <div class="p-4 sm:p-5 border-b border-slate-800 flex items-center justify-between">
             <div class="flex items-center space-x-3">
                 <div class="w-10 h-10 rounded-xl bg-white/10 p-1 flex items-center justify-center shrink-0 border border-white/15 shadow-md">
-                    <img src="icon-apk-asv.png" alt="Logo ASV" class="w-full h-full object-contain">
+                    <img src="icon-apk-asv.png" onerror="this.onerror=null;this.src='https://placehold.co/80x80/D71921/FFFFFF?text=ASV';" alt="Logo ASV" class="w-full h-full object-contain rounded-lg">
                 </div>
                 <div>
                     <div class="font-black tracking-tight text-sm sm:text-base leading-tight text-white">
@@ -226,7 +225,7 @@
 
                 <div class="flex items-center space-x-2 sm:space-x-3 min-w-0">
                     <div class="flex items-center font-black text-sm sm:text-base tracking-tight shrink-0 border-r border-slate-200 pr-2 sm:pr-3">
-                        <img src="icon-apk.png" alt="Logo ASV" class="h-7 sm:h-8 w-auto object-contain">
+                        <img src="icon-apk-asv.png" onerror="this.onerror=null;this.src='https://placehold.co/64x64/D71921/FFFFFF?text=ASV';" alt="Logo ASV" class="h-7 sm:h-8 w-auto object-contain rounded">
                         <span class="text-slate-700 text-xs ml-1.5 font-semibold hidden sm:inline">| System</span>
                     </div>
                 
@@ -375,7 +374,7 @@
                 <!-- 1. MULTI-COLOR PROGRESS BAR CHART -->
                 <div class="space-y-2">
                     <div class="flex items-center justify-between text-xs font-bold text-slate-700">
-                        <span>Proporsi Status Fisik Aset Terscan</span>
+                        <span id="chartPerspectiveTitle">Proporsi Status Fisik Aset Terscan</span>
                         <span id="chartTotalScannedLabel" class="text-astra-600 font-mono">0 Unit Verifikasi</span>
                     </div>
                     
@@ -388,19 +387,19 @@
                     <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-1 text-[11px] font-semibold text-slate-600">
                         <div class="flex items-center gap-1.5">
                             <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 shrink-0"></span>
-                            <span class="truncate">Baik (<span id="legGood">0</span>)</span>
+                            <span class="truncate"><span id="legGoodTitle">Baik</span> (<span id="legGood">0</span>)</span>
                         </div>
                         <div class="flex items-center gap-1.5">
                             <span class="w-2.5 h-2.5 rounded-full bg-amber-500 shrink-0"></span>
-                            <span class="truncate">Rusak Ringan (<span id="legLight">0</span>)</span>
+                            <span class="truncate"><span id="legLightTitle">Rusak Ringan</span> (<span id="legLight">0</span>)</span>
                         </div>
                         <div class="flex items-center gap-1.5">
                             <span class="w-2.5 h-2.5 rounded-full bg-rose-500 shrink-0"></span>
-                            <span class="truncate">Rusak Berat (<span id="legHeavy">0</span>)</span>
+                            <span class="truncate"><span id="legHeavyTitle">Rusak Berat</span> (<span id="legHeavy">0</span>)</span>
                         </div>
                         <div class="flex items-center gap-1.5">
                             <span class="w-2.5 h-2.5 rounded-full bg-slate-700 shrink-0"></span>
-                            <span class="truncate">Hilang (<span id="legLost">0</span>)</span>
+                            <span class="truncate"><span id="legLostTitle">Hilang</span> (<span id="legLost">0</span>)</span>
                         </div>
                     </div>
                 </div>
@@ -408,24 +407,24 @@
                 <!-- 2. KARTU DETAIL STATISTIK KONDISI -->
                 <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
                     <div onclick="filterMasterFromCondition('Baik')" class="bg-emerald-50/60 border border-emerald-100 p-3.5 rounded-xl text-center shadow-2xs hover:shadow-md transition cursor-pointer group">
-                        <span class="text-[10px] font-bold text-emerald-700 uppercase block group-hover:underline">Kondisi Baik</span>
+                        <span id="cardGoodTitle" class="text-[10px] font-bold text-emerald-700 uppercase block group-hover:underline">Kondisi Baik</span>
                         <h4 id="insightGood" class="text-xl font-black text-emerald-600 mt-1">0</h4>
-                        <span class="text-[10px] text-emerald-600/80 font-medium">Normal / Aman</span>
+                        <span id="cardGoodSub" class="text-[10px] text-emerald-600/80 font-medium">Normal / Aman</span>
                     </div>
                     <div onclick="filterMasterFromCondition('Rusak Ringan')" class="bg-amber-50/60 border border-amber-100 p-3.5 rounded-xl text-center shadow-2xs hover:shadow-md transition cursor-pointer group">
-                        <span class="text-[10px] font-bold text-amber-700 uppercase block group-hover:underline">Rusak Ringan</span>
+                        <span id="cardLightTitle" class="text-[10px] font-bold text-amber-700 uppercase block group-hover:underline">Rusak Ringan</span>
                         <h4 id="insightLight" class="text-xl font-black text-amber-600 mt-1">0</h4>
-                        <span class="text-[10px] text-amber-600/80 font-medium">Perlu Perbaikan</span>
+                        <span id="cardLightSub" class="text-[10px] text-amber-600/80 font-medium">Perlu Perbaikan</span>
                     </div>
                     <div onclick="filterMasterFromCondition('Rusak Berat')" class="bg-rose-50/60 border border-rose-100 p-3.5 rounded-xl text-center shadow-2xs hover:shadow-md transition cursor-pointer group">
-                        <span class="text-[10px] font-bold text-rose-700 uppercase block group-hover:underline">Rusak Berat</span>
+                        <span id="cardHeavyTitle" class="text-[10px] font-bold text-rose-700 uppercase block group-hover:underline">Rusak Berat</span>
                         <h4 id="insightHeavy" class="text-xl font-black text-rose-600 mt-1">0</h4>
-                        <span class="text-[10px] text-rose-600/80 font-medium">Ganti Unit / Write-off</span>
+                        <span id="cardHeavySub" class="text-[10px] text-rose-600/80 font-medium">Ganti Unit / Write-off</span>
                     </div>
                     <div onclick="filterMasterFromCondition('Hilang')" class="bg-slate-100 border border-slate-200 p-3.5 rounded-xl text-center shadow-2xs hover:shadow-md transition cursor-pointer group">
-                        <span class="text-[10px] font-bold text-slate-700 uppercase block group-hover:underline">Hilang</span>
+                        <span id="cardLostTitle" class="text-[10px] font-bold text-slate-700 uppercase block group-hover:underline">Hilang</span>
                         <h4 id="insightLost" class="text-xl font-black text-slate-800 mt-1">0</h4>
-                        <span class="text-[10px] text-slate-500 font-medium">Tidak Ditemukan</span>
+                        <span id="cardLostSub" class="text-[10px] text-slate-500 font-medium">Tidak Ditemukan</span>
                     </div>
                 </div>
             </div>
@@ -759,7 +758,7 @@
                     <div class="flex items-start space-x-3.5">
                         <!-- Ikon Aplikasi ASV -->
                         <div class="w-12 h-12 rounded-2xl bg-white p-1 flex items-center justify-center shadow-md shrink-0 overflow-hidden">
-                           <img src="icon-apk-asv.png" alt="ASV Icon" class="w-full h-full object-cover rounded-xl">
+                           <img src="icon-apk-asv.png" onerror="this.onerror=null;this.src='https://placehold.co/96x96/D71921/FFFFFF?text=ASV';" alt="ASV Icon" class="w-full h-full object-cover rounded-xl">
                        </div>
                         <div class="min-w-0 flex-1">
                             <div class="flex flex-wrap items-center gap-2">
@@ -863,7 +862,7 @@
                 </div>
             </div>
 
-            <!-- Kolom Kanan: Sinkronisasi Server & Download Web APK -->
+            <!-- Kolom Kanan: Sinkronisasi Server -->
             <div class="space-y-5 flex flex-col justify-between">
                 <div class="bg-white rounded-2xl border border-slate-200 shadow-xs p-5 sm:p-6 space-y-4">
                     <div>
@@ -885,7 +884,6 @@
                         </button>
                     </div>
                 </div>
-
             </div>
 
         </div>
@@ -964,7 +962,7 @@
             <!-- Header Modal Login -->
             <div class="bg-gradient-to-r from-slate-900 via-astra-800 to-daihatsu-900 text-white p-6 text-center relative">
                <div class="w-16 h-16 rounded-2xl bg-white p-1 flex items-center justify-center mx-auto mb-3 shadow-lg overflow-hidden">
-                    <img src="icon-apk-asv.png" alt="Logo ASV" class="w-full h-full object-cover rounded-xl">
+                    <img src="icon-apk-asv.png" onerror="this.onerror=null;this.src='https://placehold.co/128x128/D71921/FFFFFF?text=ASV';" alt="Logo ASV" class="w-full h-full object-cover rounded-xl">
                 </div>
                 <h3 class="font-black text-lg tracking-tight">Masuk Akses Petugas</h3>
                 <p class="text-xs text-slate-300 mt-1">Asset Scan & Verification System</p>
@@ -1365,7 +1363,7 @@
             <div class="bg-gradient-to-r from-slate-900 via-[#0f2354] to-[#132a63] text-white p-4 sm:p-5 flex items-center justify-between shrink-0">
                 <div class="flex items-center space-x-3 min-w-0">
                     <div class="w-11 h-11 rounded-2xl bg-white p-1 flex items-center justify-center shadow-md shrink-0 overflow-hidden">
-                        <img src="icon-apk-asv.png" alt="ASV Icon" class="w-full h-full object-cover rounded-xl">
+                        <img src="icon-apk-asv.png" onerror="this.onerror=null;this.src='https://placehold.co/88x88/D71921/FFFFFF?text=ASV';" alt="ASV Icon" class="w-full h-full object-cover rounded-xl">
                     </div>
                     <div class="min-w-0">
                         <div class="flex items-center gap-2 flex-wrap">
@@ -2600,6 +2598,37 @@
             
             const descLabel = branchVal === 'ALL' ? 'Master Data Internal' : `Business Area: ${branchVal}`;
             safeSetText('labelFilterDesc', descLabel);
+
+            // Penyesuaian judul perspektif dinamis antara Status Aset vs Status Label
+            if (activeStatusType === 'aset') {
+                safeSetText('chartPerspectiveTitle', 'Proporsi Status Fisik Aset Terscan');
+                safeSetText('legGoodTitle', 'Baik');
+                safeSetText('legLightTitle', 'Rusak Ringan');
+                safeSetText('legHeavyTitle', 'Rusak Berat');
+                safeSetText('legLostTitle', 'Hilang');
+                safeSetText('cardGoodTitle', 'Kondisi Baik');
+                safeSetText('cardGoodSub', 'Normal / Aman');
+                safeSetText('cardLightTitle', 'Rusak Ringan');
+                safeSetText('cardLightSub', 'Perlu Perbaikan');
+                safeSetText('cardHeavyTitle', 'Rusak Berat');
+                safeSetText('cardHeavySub', 'Ganti Unit / Write-off');
+                safeSetText('cardLostTitle', 'Hilang');
+                safeSetText('cardLostSub', 'Tidak Ditemukan');
+            } else {
+                safeSetText('chartPerspectiveTitle', 'Proporsi Status Label Barcode Terscan');
+                safeSetText('legGoodTitle', 'Label Baik');
+                safeSetText('legLightTitle', 'Label Rusak');
+                safeSetText('legHeavyTitle', 'Rusak Berat');
+                safeSetText('legLostTitle', 'Tidak Ada Label');
+                safeSetText('cardGoodTitle', 'Label Baik');
+                safeSetText('cardGoodSub', 'Terbaca Jelas');
+                safeSetText('cardLightTitle', 'Label Rusak');
+                safeSetText('cardLightSub', 'Sobek / Pudar');
+                safeSetText('cardHeavyTitle', 'Rusak Berat');
+                safeSetText('cardHeavySub', 'Perlu Ganti Stiker');
+                safeSetText('cardLostTitle', 'Tidak Ada Label');
+                safeSetText('cardLostSub', 'Belum Terpasang');
+            }
         
             let countGood = 0;
             let countLight = 0;
@@ -2644,10 +2673,10 @@
                     const pLost = (countLost / totalScannedLogs) * 100;
         
                     progressBarEl.innerHTML = `
-                        <div style="width: ${pGood}%" class="bg-emerald-500 h-full rounded-l-full transition-all duration-500" title="Kondisi Baik: ${countGood}"></div>
-                        <div style="width: ${pLight}%" class="bg-amber-500 h-full transition-all duration-500" title="Rusak Ringan: ${countLight}"></div>
+                        <div style="width: ${pGood}%" class="bg-emerald-500 h-full rounded-l-full transition-all duration-500" title="Baik: ${countGood}"></div>
+                        <div style="width: ${pLight}%" class="bg-amber-500 h-full transition-all duration-500" title="Rusak / Ringan: ${countLight}"></div>
                         <div style="width: ${pHeavy}%" class="bg-rose-500 h-full transition-all duration-500" title="Rusak Berat: ${countHeavy}"></div>
-                        <div style="width: ${pLost}%" class="bg-slate-700 h-full rounded-r-full transition-all duration-500" title="Hilang: ${countLost}"></div>
+                        <div style="width: ${pLost}%" class="bg-slate-700 h-full rounded-r-full transition-all duration-500" title="Hilang / Tidak Ada: ${countLost}"></div>
                     `;
                 }
             }
@@ -3137,21 +3166,9 @@
                     if (item.asetTemuan) {
                         let imgSrc = item.asetTemuan;
                         if (imgSrc.startsWith("http")) {
-                            fotoHtml = `
-                                <div class="flex items-center justify-center">
-                                    <a href="${imgSrc}" target="_blank" title="Buka foto di Google Drive" class="px-2.5 py-1 bg-astra-50 hover:bg-astra-100 text-astra-700 border border-astra-200 rounded-lg text-[11px] font-bold transition flex items-center gap-1">
-                                        <i class="fa-solid fa-arrow-up-right-from-square"></i> Lihat Drive
-                                    </a>
-                                </div>
-                            `;
+                            fotoHtml = `<div class="flex items-center justify-center"><a href="${imgSrc}" target="_blank" title="Buka foto di Google Drive" class="px-2.5 py-1 bg-astra-50 hover:bg-astra-100 text-astra-700 border border-astra-200 rounded-lg text-[11px] font-bold transition flex items-center gap-1"><i class="fa-solid fa-arrow-up-right-from-square"></i> Lihat Drive</a></div>`;
                         } else {
-                            fotoHtml = `
-                                <div class="flex items-center justify-center">
-                                    <button onclick="viewPhotoDetail('${imgSrc}')" class="p-0.5 rounded-lg border border-rose-300 bg-white">
-                                        <img src="${imgSrc}" alt="Temuan" class="w-9 h-9 object-cover rounded">
-                                    </button>
-                                </div>
-                            `;
+                            fotoHtml = `<div class="flex items-center justify-center"><button onclick="viewPhotoDetail('${imgSrc}')" class="p-0.5 rounded-lg border border-rose-300 bg-white"><img src="${imgSrc}" alt="Temuan" class="w-9 h-9 object-cover rounded"></button></div>`;
                         }
                     }
 
@@ -3280,6 +3297,7 @@
                     assets = assets.filter(a => !(String(a.id) === String(id) && String(a.subNumber || '0') === String(sub || '0')));
                     assets.unshift(newAsset);
                     
+                    populateRoomFilterDropdown();
                     closeAddAssetModal();
                     showToast('Berhasil Ditambahkan!', `Aset ${id} berhasil tersimpan.`, 'success');
 
@@ -3924,9 +3942,16 @@
                 return;
             }
         
-            const queryId = manualId.toLowerCase();
+            let cleanedText = manualId.replace(/[-_]/g, " ");
+            let parts = cleanedText.split(/\s+/);
+            let queryId = parts[0].trim().toLowerCase();
+            let querySub = (parts[1] || "0").trim().toLowerCase();
         
             let foundAsset = assets.find(a => {
+                let dbId = String(a.id || a["ID Asset"] || "").trim().toLowerCase();
+                let dbSub = String(a.subNumber !== undefined ? a.subNumber : (a["Sub-Number"] !== undefined ? a["Sub-Number"] : "0")).trim().toLowerCase();
+                return dbId === queryId && dbSub === querySub;
+            }) || assets.find(a => {
                 let dbId = String(a.id || a["ID Asset"] || "").trim().toLowerCase();
                 return dbId === queryId;
             });
@@ -3934,6 +3959,23 @@
             if (!foundAsset) {
                 playBeepSound('error');
                 showToast('Aset Tidak Ditemukan', `ID Asset "${manualId}" tidak terdaftar di Master Aset.`, 'warning');
+                return;
+            }
+
+            // Cek apakah aset sudah dipindai hari ini
+            const todayStr = new Date().toLocaleDateString('id-ID', { day: '2-digit', month: '2-digit', year: 'numeric' }).replace(/\//g, '.');
+            const alreadyScannedToday = historyLogs.some(h => {
+                let hId = String(h.assetId || "").trim().toLowerCase();
+                let hSub = String(h.subNumber || "0").trim().toLowerCase();
+                let hDate = String(h.tanggalScan || "").trim();
+                return hId === String(foundAsset.id).trim().toLowerCase() && 
+                       hSub === String(foundAsset.subNumber || "0").trim().toLowerCase() && 
+                       hDate === todayStr;
+            });
+
+            if (alreadyScannedToday) {
+                playBeepSound('error');
+                showToast('Aset Sudah Terscan', `Aset ${foundAsset.id} sudah pernah dipindai hari ini.`, 'warning');
                 return;
             }
         
@@ -3945,9 +3987,24 @@
         // --- PWA INSTALLATION & SERVICE WORKER ---
         let deferredPwaPrompt = null;
 
+        // Daftarkan Service Worker resmi dari /sw.js (Vercel Production)
+        if ('serviceWorker' in navigator && !isPreviewOrOfflineEnv()) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js', { scope: '/' })
+                    .then(reg => console.log('Service Worker ASV terdaftar:', reg.scope))
+                    .catch(err => console.warn('Gagal mendaftarkan Service Worker:', err));
+            });
+        }
+
         window.addEventListener('beforeinstallprompt', (e) => {
             e.preventDefault();
             deferredPwaPrompt = e;
+
+            // Perbarui tampilan tombol jika prompt instalasi langsung dari browser sudah siap
+            const mainBtn = document.getElementById('btnInstallPwaMain');
+            if (mainBtn) {
+                mainBtn.innerHTML = `<i class="fa-solid fa-download"></i> <span>Instal Aplikasi Sekarang</span>`;
+            }
         });
 
         window.addEventListener('appinstalled', () => {
@@ -3967,26 +4024,44 @@
         }
 
         async function triggerPwaInstall() {
+            // Jika browser mendukung & menyediakan prompt instalasi 1-klik
             if (deferredPwaPrompt) {
-                deferredPwaPrompt.prompt();
-                const { outcome } = await deferredPwaPrompt.userChoice;
-                if (outcome === 'accepted') {
-                    deferredPwaPrompt = null;
-                    closePwaGuideModal();
+                try {
+                    await deferredPwaPrompt.prompt();
+                    const { outcome } = await deferredPwaPrompt.userChoice;
+                    if (outcome === 'accepted') {
+                        deferredPwaPrompt = null;
+                        closePwaGuideModal();
+                        showToast('Menginstal Aplikasi...', 'Tunggu sebentar, ikon ASV sedang ditambahkan ke layar utama.', 'success');
+                    }
+                } catch (err) {
+                    console.warn('Prompt instalasi gagal dipanggil:', err);
+                    openPwaGuideModal();
                 }
-            } else {
-                // Jika browser iOS Safari atau prompt sudah pernah muncul / berjalan di preview
-                openPwaGuideModal();
-                showToast('Petunjuk Instalasi', 'Ikuti panduan pemasangan manual Android / iOS di layar ini.', 'info');
+                return;
             }
-        }
 
-        if ('serviceWorker' in navigator && !isPreviewOrOfflineEnv()) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('./sw.js')
-                    .then(reg => console.log('Service Worker ASV terdaftar:', reg.scope))
-                    .catch(err => console.warn('Gagal mendaftarkan Service Worker:', err));
-            });
+            // Cek jika aplikasi sudah berjalan dalam mode Standalone (sudah terinstal)
+            const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+            if (isStandalone) {
+                showToast('Sudah Terpasang', 'Aplikasi ASV sudah terpasang dan sedang dibuka dalam mode aplikasi.', 'info');
+                return;
+            }
+
+            // Deteksi lingkungan jika dibuka di dalam WebView (WhatsApp/IG) atau iOS Safari
+            const ua = navigator.userAgent || '';
+            const isInAppBrowser = /FBAN|FBAV|Instagram|WhatsApp|Line|wv/i.test(ua);
+            const isIOS = /iPad|iPhone|iPod/.test(ua) && !window.MSStream;
+
+            openPwaGuideModal();
+
+            if (isInAppBrowser) {
+                showToast('Buka di Chrome / Safari', 'Anda membuka link di dalam aplikasi (WA/IG). Pilih "Buka di Browser/Chrome" terlebih dahulu agar bisa diinstal.', 'warning');
+            } else if (isIOS) {
+                showToast('Pengguna iPhone / iPad', 'Tap tombol Bagikan (Share) di bawah Safari lalu pilih "Tambah ke Layar Utama".', 'info');
+            } else {
+                showToast('Gunakan Menu Browser (⋮)', 'Jika pop-up otomatis belum muncul, tekan titik tiga (⋮) di pojok kanan atas Chrome lalu pilih "Instal Aplikasi".', 'info');
+            }
         }
         
         // --- INITIALIZATION ---
