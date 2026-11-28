@@ -1,32 +1,31 @@
 {
-  "id": "/",
   "name": "Asset Scan & Verification System (ASV)",
   "short_name": "ASV System",
   "description": "Sistem Stock Opname & Verifikasi Aset Fisik - PT Astra International Tbk - Daihatsu",
-  "start_url": "/",
-  "scope": "/",
+  "start_url": "./index.html",
+  "scope": "./",
   "display": "standalone",
   "orientation": "portrait",
-  "background_color": "#0f172a",
-  "theme_color": "#0f172a",
-  "icons": [
+  "background_color": "#f1f5f9",
+  "theme_color": "#f1f5f9",
+  "lang": "id",
+  "categories": [
+    "business",
+    "productivity",
+    "utilities"
+  ],
+   "icons": [
      {
-      "src": "/icon-apk-asv.png",
+      "src": "icon-apk-1.png",
       "sizes": "192x192",
       "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "/icon-apk-asv.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "/icon-apk-asv.png",
-      "sizes": "512x512",
-      "type": "image/png",
       "purpose": "maskable"
-    }
-  ]
-}
+      },
+    {
+    "src": "icon-apk.png",
+    "sizes": "512x512",
+    "type": "image/png",
+    "purpose": "any"
+      }
+    ]
+  }
